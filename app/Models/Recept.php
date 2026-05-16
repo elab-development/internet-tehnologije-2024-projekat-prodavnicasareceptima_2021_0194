@@ -10,7 +10,19 @@ class Recept extends Model
     /** @use HasFactory<\Database\Factories\ReceptFactory> */
     use HasFactory;
 
-    protected $table = 'recepti'; 
-    protected $primaryKey = 'idRecepta';
+    protected $primaryKey = 'idRecept';
+
+    protected $fillable = [
+        'naziv',
+        'uputstvo',
+        'vremePripreme',
+        'kategorija',
+        'brojKalorija',
+        'brojPorcija',
+    ];
+
+    public function receptProizvod() {
+        return $this->belongsToMany(Proizvod::class, 'recept_proizvods', 'idRecept', 'idProizvod')->withPivot('potrebnaKolicina');
+    }
 
 }

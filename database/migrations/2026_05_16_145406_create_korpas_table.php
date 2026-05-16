@@ -12,7 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('korpas', function (Blueprint $table) {
-            $table->id();
+            $table->id('idKorpa')->autoIncrement();
+            $table->foreignId('idUser')->references('idUser')->on('users')->onDelete('cascade');
+            $table->dateTime('datumKreiranja');
+            $table->decimal('ukupnaCena', 10, 2);
             $table->timestamps();
         });
     }

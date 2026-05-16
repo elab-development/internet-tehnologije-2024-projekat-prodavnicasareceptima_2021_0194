@@ -10,16 +10,15 @@ class Korpa extends Model
     /** @use HasFactory<\Database\Factories\KorpaFactory> */
     use HasFactory;
 
-    protected $table = 'korpe';
-    protected $primaryKey = 'idKorpe';
+    protected $primaryKey = 'idKorpa';
 
     //Ova korpa pripada jednom korisniku
-    public function korisnik() {
-        return $this->belongsTo(Korisnik::class, 'idKorisnika');
+    public function user() {
+        return $this->belongsTo(User::class, 'idUser');
     }
 
     //Jedna korpa moze imati vise stavki korpe
     public function korpaStavka()  {
-        return $this->hasMany(KorpaStavka::class, 'idKorpe');
+        return $this->hasMany(KorpaStavka::class, 'idKorpa');
     }
 }

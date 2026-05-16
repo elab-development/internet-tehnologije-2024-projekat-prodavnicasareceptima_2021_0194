@@ -12,7 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('recept_proizvods', function (Blueprint $table) {
-            $table->id();
+            $table->id('idReceptProizvod')->autoIncrement();
+            $table->foreignId('idRecept')->references('idRecept')->on('recepts')->onDelete('cascade');
+            $table->foreignId('idProizvod')->references('idProizvod')->on('proizvods')->onDelete('cascade');
+            $table->decimal('potrebnaKolicina', 10, 2);
             $table->timestamps();
         });
     }

@@ -12,7 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('kupovinas', function (Blueprint $table) {
-            $table->id();
+            $table->id('idKupovina')->autoIncrement();
+            $table->string('imeKupca');
+            $table->string('prezimeKupca');
+            $table->string('email');
+            $table->string('adresaIsporuke');
+            $table->date('datumKupovine');
+            $table->decimal('ukupnaCena', 10, 2);
             $table->timestamps();
         });
     }

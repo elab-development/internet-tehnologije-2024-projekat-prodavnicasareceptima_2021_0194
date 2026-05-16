@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('korisniks', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::table('recepts', function (Blueprint $table) {
+            //
+            $table->string('slika')->nullable()->after('uputstvo');
         });
     }
 
@@ -22,6 +22,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('korisniks');
+        Schema::table('recepts', function (Blueprint $table) {
+            //
+            $table->dropColumn('slika');
+        });
     }
 };

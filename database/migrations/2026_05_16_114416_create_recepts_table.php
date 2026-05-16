@@ -12,7 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('recepts', function (Blueprint $table) {
-            $table->id();
+            $table->id('idRecept')->autoIncrement();
+            $table->string('naziv');
+            $table->text('uputstvo');
+            $table->integer('vremePripreme');
+            $table->integer('brojPorcija');
             $table->timestamps();
         });
     }

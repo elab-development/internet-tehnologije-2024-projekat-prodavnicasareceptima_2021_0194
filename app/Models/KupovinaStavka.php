@@ -10,17 +10,23 @@ class KupovinaStavka extends Model
     /** @use HasFactory<\Database\Factories\KupovinaStavkaFactory> */
     use HasFactory;
 
-    protected $table = 'kupovina_stavke';
     protected $primaryKey = 'idKupovinaStavka';
+
+    protected $fillable = [
+        'idKupovina',
+        'idProizvod',
+        'kolicina',
+        'cena',
+        ];
 
     //Jedna stavka kupovine pripada jednoj kupovini
     public function kupovina(){
-        return $this->belongsTo(Kupovina::class,'idKupovine');
+        return $this->belongsTo(Kupovina::class,'idKupovina');
     }
 
     //Jedna stavka kupovine odnosi se na jedan proizvod
     public function proizvod()  {
-        return $this->belongsTo(Proizvod::class, 'idProizvoda');
+        return $this->belongsTo(Proizvod::class, 'idProizvod');
     }
 
 }

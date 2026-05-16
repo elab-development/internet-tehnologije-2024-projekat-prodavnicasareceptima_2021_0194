@@ -10,11 +10,19 @@ class Kupovina extends Model
     /** @use HasFactory<\Database\Factories\KupovinaFactory> */
     use HasFactory;
 
-    protected $table = 'kupovine';
-    protected $primaryKey = 'idKupovine';
+    protected $primaryKey = 'idKupovina';
+
+    protected $fillable = [
+        'imeKupca',
+        'prezimeKupca',
+        'emailKupca',
+        'adresaIsporuke',
+        'datumKupovine',
+        'ukupnaCena'
+    ];
 
     //Jedna kupovina moze imati vise stavki kupovine
     public function kupovinaStavka()  {
-        return $this->hasMany(KupovinaStavka::class, 'idKupovine');
+        return $this->hasMany(KupovinaStavka::class, 'idKupovina');
     }
 }

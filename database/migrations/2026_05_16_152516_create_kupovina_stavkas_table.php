@@ -12,7 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('kupovina_stavkas', function (Blueprint $table) {
-            $table->id();
+            $table->id('idKupovinaStavka')->autoIncrement();
+            $table->integer('kolicina');
+            $table->decimal('cena', 10, 2);
+            $table->foreignId('idKupovina')->references('idKupovina')->on('kupovinas')->onDelete('cascade');
+            $table->foreignId('idProizvod')->references('idProizvod')->on('proizvods')->onDelete('cascade');
             $table->timestamps();
         });
     }

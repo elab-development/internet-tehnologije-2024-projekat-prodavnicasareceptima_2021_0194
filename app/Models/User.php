@@ -13,15 +13,18 @@ class User extends Authenticatable
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
+   // protected $table = 'korisnici'; // Naziv tabele u bazi
+    protected $primaryKey = 'idUser'; // Primarni ključ u bazi
+
     /**
      * The attributes that are mass assignable.
      *
      * @var list<string>
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'korisnickoIme',
+        'lozinka',
+        'tipKorisnika',
     ];
 
     /**
@@ -30,8 +33,7 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $hidden = [
-        'password',
-        'remember_token',
+        'lozinka',
     ];
 
     /**
@@ -46,4 +48,10 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    //Jedan korisnik moze imati vise korpi
+    public function korpa()  {
+        return $this->hasMany(Korpa::class, 'idUser');
+    }
+
 }
