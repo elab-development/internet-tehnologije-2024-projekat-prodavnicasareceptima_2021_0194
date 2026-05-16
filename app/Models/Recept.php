@@ -9,4 +9,8 @@ class Recept extends Model
 {
     /** @use HasFactory<\Database\Factories\ReceptFactory> */
     use HasFactory;
+
+    protected $table = 'recepti'; 
+    protected $primaryKey = 'idRecepta';
+
 }

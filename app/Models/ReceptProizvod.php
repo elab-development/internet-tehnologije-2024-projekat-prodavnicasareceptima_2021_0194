@@ -9,4 +9,9 @@ class ReceptProizvod extends Model
 {
     /** @use HasFactory<\Database\Factories\ReceptProizvodFactory> */
     use HasFactory;
+
+    protected $table = 'recept_proizvodi';
+    protected $primaryKey = 'idReceptProizvod';
+
+    
 }
