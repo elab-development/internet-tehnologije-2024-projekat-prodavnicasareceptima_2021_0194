@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
             //ProizvodSeeder::class,
             //KupovinaSeeder::class,
             //KupovinaStavkaSeeder::class,
-            ReceptSeeder::class,
+            //ReceptSeeder::class,
             ReceptProizvodSeeder::class
         ]);
     }

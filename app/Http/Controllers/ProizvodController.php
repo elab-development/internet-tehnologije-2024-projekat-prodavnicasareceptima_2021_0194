@@ -82,16 +82,88 @@ class ProizvodController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Proizvod $proizvod)
+    public function update(Request $request, $idProizvod)
     {
-        //
+        //Validacija podataka
+        $validator = Validator::make($request->all(), [
+            'naziv' => 'string|max:255',
+            'cena' => 'numeric|min:0',
+            'kategorija' => 'string|max:255',
+            'mernaJedinica'=> 'string|max:255',
+            //'slika' => 'required|string|max:255'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors()
+            ], 400);
+        }
+       
+        $validated = $validator->validated();
+
+        //Nalazenje proizvoda po id-u
+        $proizvod = Proizvod::findOrFail($idProizvod);
+
+        //Azuriranje proizvoda
+        $proizvod->update($validated);
+  
+        return response()->json([
+            'message' => 'Proizvod je uspesno azuriran.',
+            'data' => $proizvod
+        ], 200);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Proizvod $proizvod)
+    public function destroy($idProizvod)
     {
-        //
+        //Nalazenje proizvoda po id-u
+        $proizvod = Proizvod::findOrFail($idProizvod);
+
+        //Brisanje proizvoda
+        $proizvod->delete();
+  
+        return response()->json([
+            'message' => 'Proizvod je uspesno obrisan.'
+        ], 200);
+    }
+
+    //Pretrazivanje proizvoda po nazivu i kategoriji
+    public function search(Request $request)
+    {
+        //Validacija podataka
+        $validator = Validator::make($request->all(), [
+            'naziv' => 'nullable|string|max:255',
+            'kategorija' => 'nullable|string|max:255'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors()
+            ], 400);
+        }
+       
+        $validated = $validator->validated();
+
+        $query = Proizvod::query();
+
+        if (!empty($validated['naziv'])) {
+            $query->where('naziv', 'like', '%' . $validated['naziv'] . '%');
+        }
+        if (!empty($validated['kategorija'])) {
+            $query->where('kategorija', 'like', '%' . $validated['kategorija'] . '%');
+        }
+        
+        $proizvodi = $query->get();
+        if ($proizvodi->isEmpty()) {
+            return response()->json([
+                'message' => 'Proizvod nije pronadjen.',
+            ], 404);
+        }
+  
+        return response()->json([
+            'data' => $proizvodi
+        ], 200);
     }
 }
