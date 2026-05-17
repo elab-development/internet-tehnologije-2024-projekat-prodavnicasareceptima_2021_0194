@@ -5,6 +5,8 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
+use App\Models\Kupovina;
+
 class KupovinaSeeder extends Seeder
 {
     /**
@@ -13,5 +15,6 @@ class KupovinaSeeder extends Seeder
     public function run(): void
     {
         //
+        Kupovina::factory()->create();
     }
 }

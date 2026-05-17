@@ -12,6 +12,12 @@ class Korpa extends Model
 
     protected $primaryKey = 'idKorpa';
 
+    protected $fillable = [ 
+        'idKorisnik',
+        'datumKreiranja',
+        'ukupnaCena'
+    ];
+
     //Ova korpa pripada jednom korisniku
     public function user() {
         return $this->belongsTo(User::class, 'idUser');

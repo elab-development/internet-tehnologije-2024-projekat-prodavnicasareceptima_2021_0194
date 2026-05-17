@@ -15,8 +15,10 @@ return new class extends Migration
             $table->id('idRecept')->autoIncrement();
             $table->string('naziv');
             $table->text('uputstvo');
+            $table->string('kategorija');
             $table->integer('vremePripreme');
             $table->integer('brojPorcija');
+            $table->integer('brojKalorija');
             $table->timestamps();
         });
     }

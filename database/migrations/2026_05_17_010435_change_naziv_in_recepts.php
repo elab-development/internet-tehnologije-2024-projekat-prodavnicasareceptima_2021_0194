@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('recepts', function (Blueprint $table) {
-            //Dodajemo kolonu slika u recepts tabelu
-            $table->string('slika')->nullable()->after('uputstvo');
+            //Maksimalna duzina naziva
+            $table->string('naziv', 50)->change();
         });
     }
 
@@ -23,8 +23,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('recepts', function (Blueprint $table) {
-            //
-            $table->dropColumn('slika');
+            //Vracamo da naziv nema ogranicenja za duzinu
+            $table->text('sadrzaj')->change(); 
         });
     }
 };

@@ -18,7 +18,13 @@ class ProizvodFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            //Generise slucajnu rec kao naziv
+            'naziv'=>$this->faker->word(),
+            //Cena između 10 i 2000 sa 2 decimale
+            'cena'=>$this->faker->randomFloat(2, 10, 2000),
+            //Slucajna kategorija
+            'kategorija'=>$this->faker->randomElement(['Voce', 'Povrce', 'Osnovne namirnice','Meso', 'Mlecni proizvodi']),
+            'mernaJedinica'=>$this->faker->randomElement(['kg', 'g', 'l', 'ml'])
         ];
     }
 }

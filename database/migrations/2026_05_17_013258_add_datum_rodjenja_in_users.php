@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('recepts', function (Blueprint $table) {
-            //Dodajemo kolonu slika u recepts tabelu
-            $table->string('slika')->nullable()->after('uputstvo');
+        Schema::table('users', function (Blueprint $table) {
+            //
+            $table->date('datumRodjenja')->nullable();
         });
     }
 
@@ -22,9 +22,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('recepts', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             //
-            $table->dropColumn('slika');
+            $table->dropColumn('datumRodjenja');
         });
     }
 };
