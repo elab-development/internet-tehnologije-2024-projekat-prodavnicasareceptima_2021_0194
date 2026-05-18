@@ -16,15 +16,28 @@ Route::post('/login', [AuthController::class, 'login']);
 //Route::post('/logout', [AuthController::class, 'logout']); 
 Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
 
+//Rute za Admina
+Route::middleware(['auth:sanctum', 'App\Http\Middleware\CheckUserType:admin'])->group(function () {
+    //Operacije za proizvode
+    Route::post('/dodaj_proizvod', [ProizvodController::class, 'store']);
+    Route::put('/izmeni_proizvod/{idProizvod}', [ProizvodController::class, 'update']);
+    Route::delete('/obrisi_proizvod/{idProizvod}', [ProizvodController::class, 'destroy']);
+    //Operacije za recepte
+    Route::post('/dodaj_recept', [ReceptController::class, 'store']);
+    Route::put('/izmeni_recept/{idRecept}', [ReceptController::class, 'update']);
+    Route::delete('/obrisi_recept/{idRecept}', [ReceptController::class, 'destroy']);
+
+});
+
 //Slucajevi koriscenja za proizvod
 Route::get('/proizvodi', [ProizvodController::class, 'index']);
-Route::post('/dodaj_proizvod', [ProizvodController::class, 'store']);
+/*Route::post('/dodaj_proizvod', [ProizvodController::class, 'store']);
 Route::put('/izmeni_proizvod/{idProizvod}', [ProizvodController::class, 'update']);
-Route::delete('/obrisi_proizvod/{idProizvod}', [ProizvodController::class, 'destroy']);
+Route::delete('/obrisi_proizvod/{idProizvod}', [ProizvodController::class, 'destroy']);*/
 Route::get('/pretraga', [ProizvodController::class, 'search']);
 
 //Slucajevi koriscenja za recept
-Route::post('/dodaj_recept', [ReceptController::class, 'store']);
+/*Route::post('/dodaj_recept', [ReceptController::class, 'store']);
 Route::put('/izmeni_recept/{idRecept}', [ReceptController::class, 'update']);
-Route::delete('/obrisi_recept/{idRecept}', [ReceptController::class, 'destroy']);
+Route::delete('/obrisi_recept/{idRecept}', [ReceptController::class, 'destroy']);*/
 Route::get('/pretraga_po_sastojcima', [ReceptController::class, 'searchByIngredients']);

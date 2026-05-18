@@ -148,6 +148,7 @@ class ProizvodController extends Controller
 
         $query = Proizvod::query();
 
+        //Ako unesemo oba, vratice proizvod koji zadovoljava oba uslova
         if (!empty($validated['naziv'])) {
             $query->where('naziv', 'like', '%' . $validated['naziv'] . '%');
         }
