@@ -14,7 +14,14 @@ class ReceptController extends Controller
      */
     public function index()
     {
-        //
+        
+        $recepti = Recept::with('receptProizvod')->paginate(5);
+	
+	    return response()->json([
+            'message' => 'Recepti su uspesno ucitani.',
+            'data' => $recepti
+        ], 200);
+
     }
 
     /**
@@ -67,9 +74,14 @@ class ReceptController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Recept $recept)
+    public function show($idRecept)
     {
-        //
+        $recept = Recept::findOrFail($idRecept);
+
+        return response()->json([
+            'message' => 'Recept je uspesno ucitani.',
+            'data' => $recept
+        ], 200);
     }
 
     /**

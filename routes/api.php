@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProizvodController;
 use App\Http\Controllers\ReceptController;
+use App\Models\Recept;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -18,14 +19,21 @@ Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logo
 
 //Rute za Admina
 Route::middleware(['auth:sanctum', 'App\Http\Middleware\CheckUserType:admin'])->group(function () {
+
     //Operacije za proizvode
     Route::post('/dodaj_proizvod', [ProizvodController::class, 'store']);
     Route::put('/izmeni_proizvod/{idProizvod}', [ProizvodController::class, 'update']);
     Route::delete('/obrisi_proizvod/{idProizvod}', [ProizvodController::class, 'destroy']);
+
     //Operacije za recepte
-    Route::post('/dodaj_recept', [ReceptController::class, 'store']);
+    
+    //Resource ruta - Pokriva sve CRUD operacije za proizvod
+    //apiResource automatski pravi 5 ruta (index, store, show, update, destroy)
+    Route::apiResource('/recepti', ReceptController::class)->except('show', 'index');
+    
+    /*Route::post('/dodaj_recept', [ReceptController::class, 'store']);
     Route::put('/izmeni_recept/{idRecept}', [ReceptController::class, 'update']);
-    Route::delete('/obrisi_recept/{idRecept}', [ReceptController::class, 'destroy']);
+    Route::delete('/obrisi_recept/{idRecept}', [ReceptController::class, 'destroy']);*/
 
 });
 
@@ -37,6 +45,7 @@ Route::delete('/obrisi_proizvod/{idProizvod}', [ProizvodController::class, 'dest
 Route::get('/pretraga', [ProizvodController::class, 'search']);
 
 //Slucajevi koriscenja za recept
+Route::get('/recepti', [ReceptController::class, 'index']);
 /*Route::post('/dodaj_recept', [ReceptController::class, 'store']);
 Route::put('/izmeni_recept/{idRecept}', [ReceptController::class, 'update']);
 Route::delete('/obrisi_recept/{idRecept}', [ReceptController::class, 'destroy']);*/
