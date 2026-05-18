@@ -8,10 +8,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+use  Laravel\Sanctum\HasApiTokens;
+
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable;
+    use  HasApiTokens, HasFactory, Notifiable;
 
    // protected $table = 'korisnici'; // Naziv tabele u bazi
     protected $primaryKey = 'idUser'; // Primarni ključ u bazi
@@ -24,7 +26,7 @@ class User extends Authenticatable
     protected $fillable = [
         'korisnickoIme',
         'lozinka',
-        'tipKorisnika',
+        'tipKorisnika'
     ];
 
     /**
@@ -53,5 +55,15 @@ class User extends Authenticatable
     public function korpa()  {
         return $this->hasMany(Korpa::class, 'idUser');
     }
+
+    public function getAuthPassword()
+    {
+        return $this->lozinka; //lozinka se u bazi zove lozinka, a ne password
+    }
+
+    /*public function username()
+    {
+        return 'korisnickoIme';
+    }*/
 
 }
