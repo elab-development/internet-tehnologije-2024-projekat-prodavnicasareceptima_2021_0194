@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('idKupovina')->autoIncrement();
             $table->string('imeKupca');
             $table->string('prezimeKupca');
-            $table->string('email');
+            $table->string('emailKupca');
             $table->string('adresaIsporuke');
             $table->date('datumKupovine');
             $table->decimal('ukupnaCena', 10, 2);

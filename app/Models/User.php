@@ -53,7 +53,7 @@ class User extends Authenticatable
 
     //Jedan korisnik moze imati vise korpi
     public function korpa()  {
-        return $this->hasMany(Korpa::class, 'idUser');
+        return $this->hasOne(Korpa::class, 'idUser');
     }
 
     public function getAuthPassword()

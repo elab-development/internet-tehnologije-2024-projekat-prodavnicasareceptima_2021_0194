@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Korpa;
 use Illuminate\Http\Request;
 
 use App\Models\User;
@@ -28,6 +29,13 @@ class AuthController extends Controller
             'lozinka' => Hash::make($request->lozinka),
             'tipKorisnika' => 'registrovani'
         ]); 
+
+        //KREIRANJE PRAZNE KORPE
+        Korpa::create([
+            'idUser' => $user->idUser,      
+            'datumKreiranja' => now(),      
+            'ukupnaCena' => 0              
+        ]);
 
         $token = $user->createToken('auth_token')->plainTextToken; 
 

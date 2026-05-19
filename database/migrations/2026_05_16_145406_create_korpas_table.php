@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('korpas', function (Blueprint $table) {
             $table->id('idKorpa')->autoIncrement();
-            $table->foreignId('idUser')->references('idUser')->on('users')->onDelete('cascade');
+            $table->foreignId('idUser')->unique()->references('idUser')->on('users')->onDelete('cascade');
             $table->dateTime('datumKreiranja');
             $table->decimal('ukupnaCena', 10, 2);
             $table->timestamps();

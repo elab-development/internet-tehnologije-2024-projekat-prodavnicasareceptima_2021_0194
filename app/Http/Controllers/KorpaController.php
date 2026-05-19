@@ -188,11 +188,7 @@ class KorpaController extends Controller
         }
         
         $user = auth('sanctum')->user();
-        $korpa = Korpa::create([
-            'idUser' => $user->idUser,
-            'datumKreiranja' => now(),
-            'ukupnaCena' => 0
-        ]);
+        $korpa = Korpa::findOrFail($user->idUser);
 
         // $ukupnaCena = 0;
         foreach ($sastojci as $sastojak) {
