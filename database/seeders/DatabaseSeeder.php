@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Proizvod;
 use HashContext;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -31,8 +32,10 @@ class DatabaseSeeder extends Seeder
             'tipKorisnika' => 'admin'
         ]);
 
+        Proizvod::factory(3)->create();
+
         $this->call([
-            ProizvodSeeder::class,
+            //ProizvodSeeder::class,
             //KupovinaSeeder::class,
             //KupovinaStavkaSeeder::class,
             ReceptSeeder::class,

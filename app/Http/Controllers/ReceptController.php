@@ -78,6 +78,9 @@ class ReceptController extends Controller
     {
         $recept = Recept::findOrFail($idRecept);
 
+        //$recept = Recept::with('receptProizvod')->findOrFail($idRecept);
+        //return new ReceptResource($recept);
+
         return response()->json([
             'message' => 'Recept je uspesno ucitani.',
             'data' => $recept
