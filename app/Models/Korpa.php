@@ -13,7 +13,7 @@ class Korpa extends Model
     protected $primaryKey = 'idKorpa';
 
     protected $fillable = [ 
-        'idKorisnik',
+        'idUser',
         'datumKreiranja',
         'ukupnaCena'
     ];
@@ -26,5 +26,16 @@ class Korpa extends Model
     //Jedna korpa moze imati vise stavki korpe
     public function korpaStavka()  {
         return $this->hasMany(KorpaStavka::class, 'idKorpa');
+    } 
+
+    public function updateUkupnaCena()
+    {
+        $this->ukupnaCena = KorpaStavka::query()->where('idKorpa', $this->idKorpa)
+            ->get()
+            ->sum(function ($stavka) {
+                return $stavka->cena * $stavka->kolicina;
+            });
+
+        $this->saveQuietly();
     }
 }

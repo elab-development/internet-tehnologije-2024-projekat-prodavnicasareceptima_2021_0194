@@ -15,7 +15,7 @@ class ProizvodSeeder extends Seeder
     public function run(): void
     {
         //Generise dva proizvoda i cuva ih u bazi
-        Proizvod::factory()->create();
+        Proizvod::factory(15)->create();
         //Isto radi kao i zapis ispod
         //Proizvod::factory()->count(2)->create();
 

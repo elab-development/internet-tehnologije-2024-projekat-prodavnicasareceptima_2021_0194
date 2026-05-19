@@ -32,11 +32,12 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call([
-            //ProizvodSeeder::class,
+            ProizvodSeeder::class,
             //KupovinaSeeder::class,
             //KupovinaStavkaSeeder::class,
-            //ReceptSeeder::class,
-            //ReceptProizvodSeeder::class
+            ReceptSeeder::class,
+            ReceptProizvodSeeder::class,
+            KorpaSeeder::class
         ]);
     }
 }

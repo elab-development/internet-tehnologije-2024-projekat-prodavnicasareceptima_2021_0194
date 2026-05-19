@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('korpa_stavkas', function (Blueprint $table) {
             $table->id('idKorpaStavka')->autoIncrement();
-            $table->dateTime('datumKreiranja');
-            $table->decimal('ukupnaCena', 10, 2);
+            $table->decimal('cena', 10, 2);
+            $table->integer('kolicina');
             $table->foreignId('idProizvod')->references('idProizvod')->on('proizvods')->onDelete('cascade');
             $table->foreignId('idKorpa')->references('idKorpa')->on('korpas')->onDelete('cascade');
             $table->timestamps();

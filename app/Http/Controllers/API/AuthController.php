@@ -59,7 +59,8 @@ class AuthController extends Controller
     public function logout()
     {
         //auth()->users()->tokens()->delete();
-        Auth::user()->tokens()->delete();
+        auth('sanctum')->user()->tokens()->delete();
+        //Auth::user()->tokens()->delete();
         return response()->json(['message' => 'Uspešno ste se odjavili.']);
     }
 }

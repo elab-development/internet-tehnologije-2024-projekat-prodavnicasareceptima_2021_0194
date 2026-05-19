@@ -1,11 +1,12 @@
 <?php
 
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\KorpaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProizvodController;
 use App\Http\Controllers\ReceptController;
-use App\Models\Recept;
+use App\Http\Middleware\CheckUserType;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -14,8 +15,8 @@ Route::get('/user', function (Request $request) {
 //Autentifikacija korisnika
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']); 
-//Route::post('/logout', [AuthController::class, 'logout']); 
-Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
+Route::post('/logout', [AuthController::class, 'logout']); 
+//Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
 
 //Rute za Admina
 Route::middleware(['auth:sanctum', 'App\Http\Middleware\CheckUserType:admin'])->group(function () {
@@ -50,3 +51,9 @@ Route::get('/recepti', [ReceptController::class, 'index']);
 Route::put('/izmeni_recept/{idRecept}', [ReceptController::class, 'update']);
 Route::delete('/obrisi_recept/{idRecept}', [ReceptController::class, 'destroy']);*/
 Route::get('/pretraga_po_sastojcima', [ReceptController::class, 'searchByIngredients']);
+
+//Korpa
+Route::get('/korpa', [KorpaController::class, 'index']);
+Route::put('/korpa/{idKorpa}/proizvod/{idProizvod}', [KorpaController::class, 'updateOrCreateKorpaStavka']);
+Route::post('/generisi_korpu/{idRecept}', [KorpaController::class, 'generateCartByRecipe']);
+Route::delete('/korpa/{idKorpa}/proizvod/{idProizvod}', [KorpaController::class, 'removeKorpaStavka']);
