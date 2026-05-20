@@ -22,7 +22,7 @@ class AuthController extends Controller
         ]); 
         
         if ($validator->fails())
-            return response()->json($validator->errors(), 422); 
+            return response()->json([$validator->errors(), 422]); 
         
         $user = User::create([ 
             'korisnickoIme' => $request->korisnickoIme,
@@ -49,8 +49,8 @@ class AuthController extends Controller
             'password' => $request->lozinka,
         ])) {
             return response()->json([
-                'message' => 'Neispravno korisničko ime ili lozinka.'
-            ], 401);
+                'success' => false
+            ]);
         }
         
         $user = User::firstWhere('korisnickoIme', $request['korisnickoIme']); 
@@ -58,6 +58,7 @@ class AuthController extends Controller
         $token = $user->createToken('auth_token')->plainTextToken; 
         
         return response() ->json([
+            'success' => true,
             'message' => 'Hi ' . $user->korisnickoIme . ', welcome to home', 
             'access_token' => $token, 
             'token_type' => 'Bearer',

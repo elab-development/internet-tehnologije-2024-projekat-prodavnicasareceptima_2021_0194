@@ -1,10 +1,12 @@
-import React from 'react'
-import "../styles/NavBar.css"
+import React from "react";
+import "../styles/NavBar.css";
 
 function NavBar() {
   return (
-    <>
-      <nav className="navbar navbar-dark bg-success fixed-top" aria-label="First navbar example">
+    <nav
+      className="navbar navbar-dark bg-success fixed-top"
+      aria-label="First navbar example"
+    >
       <div className="container-fluid">
         <a className="navbar-brand" href="#">
           Zdravi Zalogaji
@@ -29,7 +31,7 @@ function NavBar() {
                 Početna
               </a>
             </li>
-            
+
             <li className="nav-item dropdown">
               <a
                 className="nav-link dropdown-toggle"
@@ -71,15 +73,11 @@ function NavBar() {
             </li>
 
             <li className="nav-item">
-              <a className="nav-link">
-                Proizvodi
-              </a>
+              <a className="nav-link">Proizvodi</a>
             </li>
 
             <li className="nav-item">
-              <a className="nav-link">
-                Korpa
-              </a>
+              <a className="nav-link">Korpa</a>
             </li>
 
             <li className="nav-item">
@@ -88,20 +86,19 @@ function NavBar() {
               </a>
             </li>
           </ul>
-          
+
           {/* <form role="search">
             <input
-              className="form-control"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
+                className="form-control"
+                type="search"
+                placeholder="Search"
+                aria-label="Search"
             />
-          </form> */}
+            </form> */}
         </div>
       </div>
-    </nav>  
-    </>
-  )
+    </nav>
+  );
 }
 
-export default NavBar
+export default NavBar;

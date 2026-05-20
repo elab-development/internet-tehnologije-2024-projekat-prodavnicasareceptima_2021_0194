@@ -26,11 +26,11 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);*/
 
-        /*User::create([
+        User::create([
             'korisnickoIme' => 'Admin',
             'lozinka' => Hash::make('admin123'),
             'tipKorisnika' => 'admin'
-        ]);*/
+        ]);
 
         //Proizvod::factory(3)->create();
 
