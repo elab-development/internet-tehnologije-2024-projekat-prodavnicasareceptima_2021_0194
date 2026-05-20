@@ -4,11 +4,13 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-function Login() {
+function Register() {
   const [userData, setUserData] = useState({
     korisnickoIme: "",
     lozinka: "",
   });
+
+  let navigate = useNavigate();
 
   function handleInput(e) {
     let newUserData = userData;
@@ -16,17 +18,15 @@ function Login() {
     setUserData(newUserData);
   }
 
-  let navigate = useNavigate();
-
-  function handleLogin(e) {
+  function handleRegister(e) {
     e.preventDefault();
     axios
-      .post("http://127.0.0.1:8000/api/login", userData)
+      .post("http://127.0.0.1:8000/api/register", userData)
       .then((res) => {
         console.log(res.data);
         if (res.data.success === true) {
           window.sessionStorage.setItem("auth_token", res.data.access_token);
-          navigate("/");
+          navigate("/login");
         }
       })
       .catch((e) => {
@@ -41,7 +41,7 @@ function Login() {
           {/* IMAGE */}
           <div className="col-md-9 col-lg-6 col-xl-5">
             <img
-              src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+              src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
               className="img-fluid"
               alt="Sample image"
             />
@@ -49,8 +49,8 @@ function Login() {
 
           {/* FORM */}
           <div className="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-            <form onSubmit={handleLogin}>
-              <h3>Prijava</h3>
+            <form onSubmit={handleRegister}>
+              <h3>Registracija</h3>
               {/* USERNAME */}
               <div className="form-outline mb-4">
                 <input
@@ -81,7 +81,7 @@ function Login() {
                 </label>
               </div>
 
-              {/* LOGIN BUTTON */}
+              {/* Register BUTTON */}
               <div className="text-center text-lg-start mt-4 pt-2">
                 <button
                   type="submit"
@@ -91,13 +91,13 @@ function Login() {
                     paddingRight: "2.5rem",
                   }}
                 >
-                  Prijavi se
+                  Registruj se
                 </button>
 
                 <p className="small fw-bold mt-2 pt-1 mb-0">
-                  Nemate nalog?{" "}
-                  <a href="/register" className="link-danger">
-                    Registrujte se
+                  Već imate nalog?{" "}
+                  <a href="/login" className="link-danger">
+                    Prijavite se
                   </a>
                 </p>
               </div>
@@ -109,4 +109,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Register;

@@ -4,7 +4,7 @@ import "../styles/NavBar.css";
 function NavBar() {
   return (
     <nav
-      className="navbar navbar-dark bg-success fixed-top"
+      className="navbar navbar-dark bg-success sticky-top"
       aria-label="First navbar example"
     >
       <div className="container-fluid">
