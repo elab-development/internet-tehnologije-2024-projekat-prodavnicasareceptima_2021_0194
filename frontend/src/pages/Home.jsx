@@ -1,7 +1,7 @@
 import React from "react";
 import "../styles/Home.css";
 
-function Home() {
+function Home({ token }) {
   return (
     <div className="d-flex h-100 text-center text-bg-dark">
       <div
@@ -14,7 +14,7 @@ function Home() {
               <a
                 className="nav-link fw-bold py-1 px-0 active"
                 aria-current="page"
-                href="#"
+                href="/"
               >
                 Početna
               </a>
@@ -26,14 +26,13 @@ function Home() {
               <a className="nav-link fw-bold py-1 px-0" href="#">
                 Proizvodi
               </a>
-
-              <a className="nav-link fw-bold py-1 px-0" href="#">
-                Korpa
-              </a>
-
-              <a className="nav-link fw-bold py-1 px-0" href="#">
-                Prijavi se
-              </a>
+              {token == null ? (
+                <></>
+              ) : (
+                <a className="nav-link fw-bold py-1 px-0" href="#">
+                  Korpa
+                </a>
+              )}
             </nav>
           </div>
         </header>

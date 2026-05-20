@@ -4,16 +4,23 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Navbar from "./components/NavBar";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { useState } from "react";
 
 function App() {
+  const [token, setToken] = useState();
+
+  function addToken(auth_token) {
+    setToken(auth_token);
+  }
+
   return (
     <div className="App">
       <Router>
-        <Navbar />
+        <Navbar token={token} addToken={addToken} />
         <Routes>
-          <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<Login addToken={addToken} />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home token={token} />} />
         </Routes>
       </Router>
     </div>

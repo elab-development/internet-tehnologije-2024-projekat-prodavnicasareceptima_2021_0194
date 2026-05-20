@@ -71,5 +71,21 @@ class AuthController extends Controller
         auth('sanctum')->user()->tokens()->delete();
         //Auth::user()->tokens()->delete();
         return response()->json(['message' => 'Uspešno ste se odjavili.']);
+
+        // Prvo proveravamo da li korisnik ima validan token
+        /*$user = Auth::user();
+        if ($user) {
+            $user->tokens->each(function ($token) {
+                $token->delete();
+            });
+            // Uspesno odjavljivanje
+            return response()->json([
+                'message' => 'Uspešno ste se odjavili.'
+            ]);
+        }
+        // Ako korisnik nije prijavljen
+        return response()->json([
+            'message' => 'Korisnik nije prijavljen.'
+        ], 401);*/
     }
 }

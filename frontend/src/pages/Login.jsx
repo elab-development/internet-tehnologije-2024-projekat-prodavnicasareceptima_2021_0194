@@ -4,7 +4,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-function Login() {
+function Login({ addToken }) {
   const [userData, setUserData] = useState({
     korisnickoIme: "",
     lozinka: "",
@@ -21,11 +21,12 @@ function Login() {
   function handleLogin(e) {
     e.preventDefault();
     axios
-      .post("http://127.0.0.1:8000/api/login", userData)
+      .post("/api/login", userData)
       .then((res) => {
         console.log(res.data);
         if (res.data.success === true) {
           window.sessionStorage.setItem("auth_token", res.data.access_token);
+          addToken(res.data.access_token);
           navigate("/");
         }
       })

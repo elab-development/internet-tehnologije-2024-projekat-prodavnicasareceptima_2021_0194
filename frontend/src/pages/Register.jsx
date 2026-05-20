@@ -21,7 +21,7 @@ function Register() {
   function handleRegister(e) {
     e.preventDefault();
     axios
-      .post("http://127.0.0.1:8000/api/register", userData)
+      .post("/api/register", userData)
       .then((res) => {
         console.log(res.data);
         if (res.data.success === true) {
