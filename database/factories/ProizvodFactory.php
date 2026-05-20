@@ -24,7 +24,7 @@ class ProizvodFactory extends Factory
             'cena'=>$this->faker->randomFloat(2, 10, 2000),
             //Slucajna kategorija
             'kategorija'=>$this->faker->randomElement(['Voce', 'Povrce', 'Osnovne namirnice','Meso', 'Mlecni proizvodi']),
-            'mernaJedinica'=>$this->faker->randomElement(['kg', 'g', 'l', 'ml'])
+            'mernaJedinica'=>$this->faker->randomElement(['kg', 'g', 'l', 'ml', 'kom'])
         ];
     }
 }

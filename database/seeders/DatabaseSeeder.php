@@ -26,21 +26,21 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);*/
 
-        User::create([
+        /*User::create([
             'korisnickoIme' => 'Admin',
             'lozinka' => Hash::make('admin123'),
             'tipKorisnika' => 'admin'
-        ]);
+        ]);*/
 
-        Proizvod::factory(3)->create();
+        //Proizvod::factory(3)->create();
 
         $this->call([
-            //ProizvodSeeder::class,
+            ProizvodSeeder::class,
             //KupovinaSeeder::class,
             //KupovinaStavkaSeeder::class,
             ReceptSeeder::class,
-            ReceptProizvodSeeder::class,
-            KorpaSeeder::class
+            //ReceptProizvodSeeder::class,
+            //KorpaSeeder::class
         ]);
     }
 }

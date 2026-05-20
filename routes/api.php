@@ -69,3 +69,5 @@ Route::get('/recepti', [ReceptController::class, 'index']);
 Route::put('/izmeni_recept/{idRecept}', [ReceptController::class, 'update']);
 Route::delete('/obrisi_recept/{idRecept}', [ReceptController::class, 'destroy']);*/
 Route::get('/pretraga_po_sastojcima', [ReceptController::class, 'searchByIngredients']);
+
+Route::get('/recepti/{idRecept}/export-pdf', [ReceptController::class, 'exportPdf']);

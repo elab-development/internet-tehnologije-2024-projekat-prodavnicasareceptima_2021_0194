@@ -6,6 +6,7 @@ use App\Models\Recept;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Validator;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ReceptController extends Controller
 {
@@ -173,5 +174,22 @@ class ReceptController extends Controller
         return response()->json([
             'data' => $recepti
         ], 200);
+    }
+
+    public function exportPdf($idRecept)
+    {
+        //Pronadje recept sa svim njegovim sastojcima
+        $recept = Recept::with('receptProizvod')->find($idRecept);
+
+        if (!$recept) {
+            return response()->json(['message' => 'Recept nije pronadjen.'], 404);
+        }
+
+        //Ucita Blade fajl i prosledi mu podatke
+        $pdf = Pdf::loadView('pdf.recept', compact('recept'));
+
+        //Vrati PDF kao fajl za preuzimanje
+        //download() ce naterati browser da preuzme fajl, stream() bi ga otvorio u tabu
+        return $pdf->download('recept-' . $idRecept . '.pdf');
     }
 }
