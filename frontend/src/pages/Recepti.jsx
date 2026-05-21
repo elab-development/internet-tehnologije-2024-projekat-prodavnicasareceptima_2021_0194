@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ReceptItem from "../components/ReceptItem";
+import { useNavigate } from "react-router-dom";
 import "../styles/Recepti.css";
 
 function Recepti() {
+  const navigate = useNavigate();
   const [recepti, setRecepti] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [lastPage, setLastPage] = useState(1);
@@ -44,7 +46,16 @@ function Recepti() {
   return (
     <div className="recepti-container">
       <h1 className="menuTitle">Naši Recepti</h1>
-
+      {/* DUGME ZA NAVIGACIJU KA SASTOJCIMA */}
+      <div className="text-center mb-4">
+        <button
+          className="btn-go"
+          style={{ width: "auto", padding: "10px 30px" }}
+          onClick={() => navigate("/pretraga_po_sastojcima")}
+        >
+          🔍 Pretraga po sastojcima koje imam
+        </button>
+      </div>
       {/* FILTERI BEZ KALORIJA */}
       <div className="filters-section">
         <select

@@ -101,7 +101,8 @@ function NavBar({ token, user, addToken, addUser }) {
               {/* LINK NA STRANICU */}
               <a
                 className={`nav-link  ${
-                  location.pathname.startsWith("/recepti")
+                  location.pathname.startsWith("/recepti") ||
+                  location.pathname === "/pretraga_po_sastojcima"
                     ? "active fw-bold"
                     : ""
                 }`}

@@ -1,4 +1,5 @@
 .recepti-container {
+  padding-top: 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -195,4 +196,11 @@
 
 .btn-reset:hover {
   background: #e0e0e0;
+}
+
+.text-center {
+  text-align: center;
+}
+.mb-4 {
+  margin-bottom: 1.5rem;
 }

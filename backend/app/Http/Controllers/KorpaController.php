@@ -198,18 +198,24 @@ class KorpaController extends Controller
         }
         
         $user = auth('sanctum')->user();
-        $korpa = Korpa::findOrFail($user->idUser);
+        $korpa = Korpa::where('idUser', $user->idUser)->first();
+        if (!$korpa) {
+            return response()->json(['error' => 'Korpa nije pronađena za ovog korisnika.'], 404);
+        }
 
         // $ukupnaCena = 0;
         foreach ($sastojci as $sastojak) {
-            KorpaStavka::create([
-                'idKorpa' => $korpa->idKorpa,
-                'idProizvod' => $sastojak['idProizvod'],
-                'kolicina' => $sastojak['potrebnaKolicina'],
-                'cena' => $sastojak['cena']   
-            ]);
-            // $ukupnaCena += $sastojak['cena'] * $sastojak['potrebnaKolicina'];
-        }    
+            KorpaStavka::updateOrCreate(
+                [
+                    'idKorpa' => $korpa->idKorpa, 
+                    'idProizvod' => $sastojak['idProizvod']
+                ],
+                [
+                    'kolicina' => $sastojak['potrebnaKolicina'],
+                    'cena' => $sastojak['cena']
+                ]
+            );
+        }   
         $korpa->updateUkupnaCena();
        
         $korpa->save();

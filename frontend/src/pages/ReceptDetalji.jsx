@@ -8,13 +8,13 @@ function ReceptDetalji() {
   const navigate = useNavigate();
   const [recept, setRecept] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [exporting, setExporting] = useState(false); // Stanje za učitavanje PDF-a
+  const [exporting, setExporting] = useState(false);
+  const [generatingCart, setGeneratingCart] = useState(false); // Novo stanje
 
   useEffect(() => {
     axios
       .get(`http://127.0.0.1:8000/api/recepti/${id}`)
       .then((res) => {
-        console.log("Šta je stiglo iz baze:", res.data.data);
         setRecept(res.data.data || res.data);
         setLoading(false);
       })
@@ -24,18 +24,13 @@ function ReceptDetalji() {
       });
   }, [id]);
 
-  // FUNKCIJA ZA PREUZIMANJE PDF-a
   const handleExportPdf = async () => {
     setExporting(true);
     try {
       const response = await axios.get(
         `http://127.0.0.1:8000/api/recepti/${id}/export-pdf`,
-        {
-          responseType: "blob", // Ključno: tražimo fajl, ne tekst
-        },
+        { responseType: "blob" },
       );
-
-      // Kreiranje linka za automatsko preuzimanje
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
       link.href = url;
@@ -43,70 +38,122 @@ function ReceptDetalji() {
       document.body.appendChild(link);
       link.click();
       link.remove();
-      setExporting(false);
     } catch (error) {
-      console.error("Greška pri izradi PDF-a:", error);
-      alert("Došlo je do greške prilikom generisanja PDF-a.");
+      alert("Greška prilikom generisanja PDF-a.");
+    } finally {
       setExporting(false);
     }
   };
 
+  // NOVA FUNKCIJA ZA KORPU
+  const handleGenerateCart = async () => {
+    const token = sessionStorage.getItem("auth_token");
+    if (!token) {
+      alert("Morate biti ulogovani da biste generisali korpu!");
+      return;
+    }
+
+    setGeneratingCart(true);
+    try {
+      const res = await axios.post(
+        `http://127.0.0.1:8000/api/generisi_korpu/${id}`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      );
+      alert(res.data.message);
+      navigate("/korpa"); // Opciono: preusmeri korisnika u korpu da vidi sastojke
+    } catch (err) {
+      console.error(err);
+      alert(err.response?.data?.error || "Greška pri generisanju korpe.");
+    } finally {
+      setGeneratingCart(false);
+    }
+  };
+
   if (loading)
-    return <div className="loading-state">Učitavanje recepta...</div>;
+    return <div className="loading-container">Učitavanje recepta...</div>;
   if (!recept)
-    return <div className="loading-state">Recept nije pronađen.</div>;
+    return <div className="loading-container">Recept nije pronađen.</div>;
 
   return (
-    <div className="detalji-container">
-      <div className="top-navigation">
-        <button className="btn-back" onClick={() => navigate(-1)}>
-          &larr; Povratak na recepte
-        </button>
+    <div className="detalji-page-wrapper">
+      <div className="detalji-container">
+        <div className="top-navigation">
+          <button className="btn-back" onClick={() => navigate(-1)}>
+            &larr; Nazad
+          </button>
 
-        {/* DUGME ZA PDF */}
-        <button
-          className="btn-pdf"
-          onClick={handleExportPdf}
-          disabled={exporting}
-        >
-          {exporting ? "Generisanje..." : "📄 Sačuvaj kao PDF"}
-        </button>
-      </div>
+          <div className="action-buttons">
+            <button
+              className="btn-pdf"
+              onClick={handleExportPdf}
+              disabled={exporting}
+            >
+              {exporting ? "..." : "📄 PDF"}
+            </button>
 
-      <div className="recept-header">
-        <div className="recept-slika-okvir">
-          <img src={recept.slika} alt={recept.naziv} />
-        </div>
-        <div className="recept-osnovno">
-          <span className="kategorija-label">{recept.kategorija}</span>
-          <h1>{recept.naziv}</h1>
-          <div className="meta-info">
-            <span>⏱ {recept.vremePripreme} min</span>
-            <span>🔥 {recept.brojKalorija} kcal</span>
-            <span>👥 {recept.brojPorcija} porcije</span>
+            <button
+              className="btn-cart-generate"
+              onClick={handleGenerateCart}
+              disabled={generatingCart}
+            >
+              {generatingCart ? "Dodavanje..." : "🛒 Kupi sve sastojke"}
+            </button>
           </div>
         </div>
-      </div>
 
-      <div className="recept-sadrzaj">
-        <div className="sastojci-blok">
-          <h3>Potrebni sastojci</h3>
-          <ul className="sastojci-lista">
-            {recept.recept_proizvod &&
-              recept.recept_proizvod.map((stavka, index) => (
-                <li key={index} className="sastojak-red">
-                  <span className="kolicina">
-                    {stavka.pivot?.potrebnaKolicina} {stavka.mernaJedinica}
-                  </span>
-                  <span className="ime-proizvoda">{stavka.naziv}</span>
-                </li>
-              ))}
-          </ul>
-        </div>
+        <div className="recept-card">
+          <div className="recept-header">
+            <div className="recept-slika-okvir">
+              <img
+                src={recept.slika || "https://via.placeholder.com/500"}
+                alt={recept.naziv}
+              />
+            </div>
+            <div className="recept-osnovno">
+              <span className="kategorija-tag">{recept.kategorija}</span>
+              <h1>{recept.naziv}</h1>
+              <div className="meta-grid">
+                <div className="meta-item">
+                  ⏱ <span>{recept.vremePripreme} min</span>
+                </div>
+                <div className="meta-item">
+                  🔥 <span>{recept.brojKalorija} kcal</span>
+                </div>
+                <div className="meta-item">
+                  👥 <span>{recept.brojPorcija} porcije</span>
+                </div>
+              </div>
+            </div>
+          </div>
 
-        <div className="uputstvo-blok">
-          <h3>Način pripreme</h3>
-          <p className="uputstvo-tekst">{recept.uputstvo}</p>
+          <div className="recept-sadrzaj">
+            <div className="sastojci-sekcija">
+              <h3>
+                <i className="fa fa-list-ul"></i> Potrebni sastojci
+              </h3>
+              <ul className="sastojci-lista">
+                {recept.recept_proizvod?.map((stavka, index) => (
+                  <li key={index}>
+                    <span className="dot"></span>
+                    <span className="ime">{stavka.naziv}</span>
+                    <span className="kolicina-tag">
+                      {stavka.pivot?.potrebnaKolicina} {stavka.mernaJedinica}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="uputstvo-sekcija">
+              <h3>
+                <i className="fa fa-utensils"></i> Način pripreme
+              </h3>
+              <div className="uputstvo-tekst">{recept.uputstvo}</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -1,157 +1,206 @@
+.detalji-page-wrapper {
+  background-color: #f9fbf2; /* Tvoja prepoznatljiva pozadina */
+  min-height: 100vh;
+  padding: 40px 20px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
 .detalji-container {
-  margin-top: 100px;
   max-width: 1000px;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 30px;
-  background: white;
-  border-radius: 20px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  margin-bottom: 50px;
+  margin: 0 auto;
+}
+
+/* Navigacija i Dugmići */
+.top-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-back,
+.btn-pdf,
+.btn-cart-generate {
+  border: none;
+  border-radius: 25px;
+  padding: 10px 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
 .btn-back {
-  background: none;
-  border: none;
-  color: #2d5a27;
-  font-weight: bold;
-  cursor: pointer;
-  margin-bottom: 30px;
-  font-size: 16px;
-  transition: 0.2s;
+  background-color: #eee;
+  color: #555;
 }
 
-.btn-back:hover {
-  color: #1b3a18;
-  text-decoration: underline;
+.btn-pdf {
+  background-color: #f4f4f4;
+  border: 1px solid #ddd;
+  color: #333;
 }
 
-/* HEADER */
+.btn-cart-generate {
+  background-color: #2d5a27; /* Tamno zelena */
+  color: white;
+  box-shadow: 0px 4px 10px rgba(45, 90, 39, 0.3);
+}
+
+.btn-cart-generate:hover {
+  background-color: #1b3a18;
+  transform: translateY(-2px);
+}
+
+/* Glavna Kartica */
+.recept-card {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.08);
+}
+
 .recept-header {
   display: flex;
-  gap: 40px;
-  margin-bottom: 40px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid #f0f0f0;
 }
 
 .recept-slika-okvir {
   flex: 1;
-  height: 350px;
+  min-width: 350px;
+  height: 400px;
 }
 
 .recept-slika-okvir img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 15px;
 }
 
 .recept-osnovno {
   flex: 1;
+  padding: 40px;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.kategorija-label {
+.kategorija-tag {
+  background-color: #e8f5e9;
   color: #2d5a27;
-  background: #eef5ec;
-  padding: 4px 12px;
+  padding: 5px 15px;
   border-radius: 20px;
-  width: fit-content;
   font-size: 14px;
   font-weight: bold;
+  width: fit-content;
   margin-bottom: 15px;
 }
 
 .recept-osnovno h1 {
-  font-size: 38px;
+  font-size: 36px;
   color: #262c31;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
-.meta-info {
+.meta-grid {
   display: flex;
   gap: 20px;
-  font-size: 17px;
-  color: #666;
 }
 
-/* SADRŽAJ */
+.meta-item {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  color: #777;
+}
+
+.meta-item span {
+  color: #333;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+/* Sadržaj recepata */
 .recept-sadrzaj {
   display: grid;
-  grid-template-columns: 1fr 1.5fr; /* Sastojci uža kolona, uputstvo šira */
+  grid-template-columns: 1fr 1.5fr;
+  padding: 40px;
   gap: 50px;
-  border-top: 1px solid #f0f0f0;
-  padding-top: 40px;
 }
 
-.recept-sadrzaj h3 {
+h3 {
   color: #2d5a27;
   margin-bottom: 20px;
   font-size: 22px;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 10px;
 }
 
-/* LISTA SASTOJAKA */
 .sastojci-lista {
   list-style: none;
   padding: 0;
 }
 
-.sastojak-red {
+.sastojci-lista li {
   display: flex;
-  justify-content: space-between;
+  align-items: center;
   padding: 10px 0;
   border-bottom: 1px dashed #eee;
 }
 
-.kolicina {
-  font-weight: bold;
-  color: #2d5a27;
+.dot {
+  width: 8px;
+  height: 8px;
+  background-color: #2d5a27;
+  border-radius: 50%;
+  margin-right: 12px;
 }
 
-.ime-proizvoda {
+.ime {
+  flex: 1;
   color: #444;
 }
 
-/* UPUTSTVO */
-.uputstvo-tekst {
-  line-height: 1.7;
-  color: #555;
-  font-size: 16px;
-}
-
-.top-navigation {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 30px;
-}
-
-/* Stilizacija PDF dugmeta */
-.btn-pdf {
-  background-color: #567e66; /* Crvena boja za PDF */
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 50px;
+.kolicina-tag {
   font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 10px rgba(231, 76, 60, 0.2);
+  color: #2d5a27;
+  background: #f1f8f1;
+  padding: 3px 10px;
+  border-radius: 5px;
+  font-size: 14px;
 }
 
-.btn-pdf:hover:not(:disabled) {
-  background-color: #73e4b5;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 15px rgba(231, 76, 60, 0.3);
+.uputstvo-tekst {
+  line-height: 1.8;
+  color: #555;
+  white-space: pre-line; /* Da sačuva prelome redova iz baze */
+  font-size: 17px;
 }
 
-.btn-pdf:disabled {
-  background-color: #bdc3c7;
-  cursor: not-allowed;
+/* Loading state */
+.loading-container {
+  text-align: center;
+  margin-top: 100px;
+  font-size: 20px;
+  color: #2d5a27;
+  font-weight: bold;
 }
 
-/* Osiguraj da se dugme back ne pomera */
-.btn-back {
-  margin-bottom: 0; /* Resetujemo marginu jer je sad u flex kontejneru */
+/* Responzivnost */
+@media (max-width: 850px) {
+  .recept-header {
+    flex-direction: column;
+  }
+  .recept-sadrzaj {
+    grid-template-columns: 1fr;
+  }
+  .recept-slika-okvir {
+    height: 300px;
+    min-width: 100%;
+  }
 }
