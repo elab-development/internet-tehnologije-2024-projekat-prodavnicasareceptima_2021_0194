@@ -2,10 +2,13 @@ import React from "react";
 import "../styles/NavBar.css";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
-function NavBar({ token, addToken }) {
+function NavBar({ token, user, addToken, addUser }) {
   let navigate = useNavigate();
+  const location = useLocation();
+  const isActive = (path) => location.pathname === path;
+
   function handleLogout(e) {
     e.preventDefault();
     let config = {
@@ -22,7 +25,7 @@ function NavBar({ token, addToken }) {
       .then((response) => {
         console.log(JSON.stringify(response.data.message));
         window.sessionStorage.removeItem("auth_token");
-        setUser(null);
+        addUser(null);
         addToken(null);
         setShowSuccess(true);
       })
@@ -30,22 +33,7 @@ function NavBar({ token, addToken }) {
         console.log(error);
       });
   }
-  const [user, setUser] = useState(null);
   const [showSuccess, setShowSuccess] = useState(false);
-
-  useEffect(() => {
-    if (token) {
-      axios
-        .get("/api/me", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((res) => {
-          setUser(res.data);
-        });
-    }
-  }, [token]);
 
   const styles = {
     overlay: {
@@ -100,14 +88,18 @@ function NavBar({ token, addToken }) {
         <div className="collapse navbar-collapse" id="navbarsExample01">
           <ul className="navbar-nav me-auto mb-2">
             <li className="nav-item">
-              <a className="nav-link" aria-current="page" href="/">
+              <a
+                className={`nav-link ${isActive("/") ? "active fw-bold" : ""}`}
+                aria-current="page"
+                href="/"
+              >
                 Početna
               </a>
             </li>
 
             <li className="nav-item dropdown">
               <a
-                className="nav-link dropdown-toggle"
+                className={`nav-link dropdown-toggle ${location.pathname.startsWith("/recepti") ? "active fw-bold" : ""}`}
                 href="#"
                 role="button"
                 data-bs-toggle="dropdown"
@@ -146,22 +138,33 @@ function NavBar({ token, addToken }) {
             </li>
 
             <li className="nav-item">
-              <a className="nav-link" href="/proizvodi">
+              <a
+                className={`nav-link ${isActive("/proizvodi") ? "active fw-bold" : ""}`}
+                href="/proizvodi"
+              >
                 Proizvodi
               </a>
             </li>
 
-            {token == null ? (
-              <></>
-            ) : (
-              <li className="nav-item">
-                <a className="nav-link">Korpa</a>
-              </li>
-            )}
+            <li className="nav-item">
+              {token == null ? (
+                <></>
+              ) : (
+                <a
+                  className={`nav-link ${isActive("/korpa") ? "active fw-bold" : ""}`}
+                  href="/korpa"
+                >
+                  Korpa
+                </a>
+              )}
+            </li>
 
             <li className="nav-item">
               {token == null ? (
-                <a className="nav-link" href="/login">
+                <a
+                  className={`nav-link ${isActive("/login") ? "active fw-bold" : ""}`}
+                  href="/login"
+                >
                   Prijavi se
                 </a>
               ) : (
@@ -191,7 +194,7 @@ function NavBar({ token, addToken }) {
             <button
               onClick={() => {
                 setShowSuccess(false);
-                navigate("/login");
+                navigate("/");
               }}
             >
               OK

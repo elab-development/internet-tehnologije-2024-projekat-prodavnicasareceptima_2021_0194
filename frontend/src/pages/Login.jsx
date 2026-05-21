@@ -29,8 +29,18 @@ function Login({ addToken }) {
       .then((res) => {
         console.log(res.data);
         if (res.data.success === true) {
-          window.sessionStorage.setItem("auth_token", res.data.access_token);
-          addToken(res.data.access_token);
+          const token = res.data.access_token;
+          window.sessionStorage.setItem("auth_token", token);
+          addToken(token);
+          axios
+            .get("/api/me", {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            })
+            .then((r) => {
+              window.sessionStorage.setItem("user", JSON.stringify(r.data));
+            });
           setShowSuccess(true);
         } else {
           setErrorMessage(

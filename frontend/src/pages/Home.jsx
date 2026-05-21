@@ -17,23 +17,15 @@ function Home({ token }) {
                 className="nav-link fw-bold py-1 px-0 active"
                 aria-current="page"
                 href="/"
-              >
-                Početna
-              </a>
+              ></a>
 
-              <a className="nav-link fw-bold py-1 px-0" href="/recepti">
-                Recepti
-              </a>
+              <a className="nav-link fw-bold py-1 px-0" href="/recepti"></a>
 
-              <a className="nav-link fw-bold py-1 px-0" href="/proizvodi">
-                Proizvodi
-              </a>
+              <a className="nav-link fw-bold py-1 px-0" href="/proizvodi"></a>
               {token == null ? (
                 <></>
               ) : (
-                <a className="nav-link fw-bold py-1 px-0" href="#">
-                  Korpa
-                </a>
+                <a className="nav-link fw-bold py-1 px-0"></a>
               )}
             </nav>
           </div>
@@ -57,7 +49,6 @@ function Home({ token }) {
             </a>
           </p>
         </main>
-
         <footer className="mt-auto text-white-50"></footer>
       </div>
     </div>
