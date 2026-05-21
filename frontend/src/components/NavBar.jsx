@@ -65,12 +65,14 @@ function NavBar({ token, user, addToken, addUser }) {
   };
   return (
     <nav
-      className="navbar navbar-dark bg-success sticky-top"
+      className="navbar navbar-dark custom-navbar sticky-top"
       aria-label="First navbar example"
     >
       <div className="container-fluid d-flex align-items-center">
         <div className="d-flex align-items-center">
           <a className="navbar-brand" href="/">
+            {/* IKONICA LOGOA */}
+            <img src="/logo.png" alt="Logo" className="navbar-logo" />
             Zdravi Zalogaji
           </a>
           <span className="navbar-text text-white ms-2">

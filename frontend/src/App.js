@@ -12,6 +12,7 @@ import axios from "axios";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Breadcrumbs from "./components/Breadcrumbs";
+import Footer from "./components/Footer";
 
 function App() {
   const [token, setToken] = useState(
@@ -79,6 +80,7 @@ function App() {
           <Route path="/korpa" element={<Korpa />} />
           <Route path="/pretraga_po_sastojcima" element={<MojiSastojci />} />
         </Routes>
+        <Footer />
       </Router>
     </div>
   );
