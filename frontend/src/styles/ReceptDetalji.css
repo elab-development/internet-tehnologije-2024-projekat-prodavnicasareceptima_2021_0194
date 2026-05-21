@@ -119,3 +119,39 @@
   color: #555;
   font-size: 16px;
 }
+
+.top-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+/* Stilizacija PDF dugmeta */
+.btn-pdf {
+  background-color: #567e66; /* Crvena boja za PDF */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 50px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(231, 76, 60, 0.2);
+}
+
+.btn-pdf:hover:not(:disabled) {
+  background-color: #73e4b5;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(231, 76, 60, 0.3);
+}
+
+.btn-pdf:disabled {
+  background-color: #bdc3c7;
+  cursor: not-allowed;
+}
+
+/* Osiguraj da se dugme back ne pomera */
+.btn-back {
+  margin-bottom: 0; /* Resetujemo marginu jer je sad u flex kontejneru */
+}

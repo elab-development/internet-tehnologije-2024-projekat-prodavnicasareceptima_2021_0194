@@ -4,18 +4,17 @@ import axios from "axios";
 import "../styles/ReceptDetalji.css";
 
 function ReceptDetalji() {
-  const { id } = useParams(); // Preuzima ID iz URL-a
+  const { id } = useParams();
   const navigate = useNavigate();
   const [recept, setRecept] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [exporting, setExporting] = useState(false); // Stanje za učitavanje PDF-a
 
   useEffect(() => {
-    // Pozivamo tvoj Laravel API za jedan recept
     axios
       .get(`http://127.0.0.1:8000/api/recepti/${id}`)
       .then((res) => {
         console.log("Šta je stiglo iz baze:", res.data.data);
-        // Pristupamo podacima (res.data.data zbog API Resource-a)
         setRecept(res.data.data || res.data);
         setLoading(false);
       })
@@ -25,6 +24,33 @@ function ReceptDetalji() {
       });
   }, [id]);
 
+  // FUNKCIJA ZA PREUZIMANJE PDF-a
+  const handleExportPdf = async () => {
+    setExporting(true);
+    try {
+      const response = await axios.get(
+        `http://127.0.0.1:8000/api/recepti/${id}/export-pdf`,
+        {
+          responseType: "blob", // Ključno: tražimo fajl, ne tekst
+        },
+      );
+
+      // Kreiranje linka za automatsko preuzimanje
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", `recept-${id}.pdf`);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      setExporting(false);
+    } catch (error) {
+      console.error("Greška pri izradi PDF-a:", error);
+      alert("Došlo je do greške prilikom generisanja PDF-a.");
+      setExporting(false);
+    }
+  };
+
   if (loading)
     return <div className="loading-state">Učitavanje recepta...</div>;
   if (!recept)
@@ -32,9 +58,20 @@ function ReceptDetalji() {
 
   return (
     <div className="detalji-container">
-      <button className="btn-back" onClick={() => navigate(-1)}>
-        &larr; Povratak na recepte
-      </button>
+      <div className="top-navigation">
+        <button className="btn-back" onClick={() => navigate(-1)}>
+          &larr; Povratak na recepte
+        </button>
+
+        {/* DUGME ZA PDF */}
+        <button
+          className="btn-pdf"
+          onClick={handleExportPdf}
+          disabled={exporting}
+        >
+          {exporting ? "Generisanje..." : "📄 Sačuvaj kao PDF"}
+        </button>
+      </div>
 
       <div className="recept-header">
         <div className="recept-slika-okvir">
@@ -52,16 +89,13 @@ function ReceptDetalji() {
       </div>
 
       <div className="recept-sadrzaj">
-        {/* SEKCIJA SA SASTOJCIMA */}
         <div className="sastojci-blok">
           <h3>Potrebni sastojci</h3>
           <ul className="sastojci-lista">
-            {/* Koristimo TAČAN NAZIV IZ KONZOLE: recept_proizvod */}
             {recept.recept_proizvod &&
               recept.recept_proizvod.map((stavka, index) => (
                 <li key={index} className="sastojak-red">
                   <span className="kolicina">
-                    {/* Količina se nalazi u pod-objektu pivot! */}
                     {stavka.pivot?.potrebnaKolicina} {stavka.mernaJedinica}
                   </span>
                   <span className="ime-proizvoda">{stavka.naziv}</span>
@@ -70,7 +104,6 @@ function ReceptDetalji() {
           </ul>
         </div>
 
-        {/* SEKCIJA SA UPUTSTVOM */}
         <div className="uputstvo-blok">
           <h3>Način pripreme</h3>
           <p className="uputstvo-tekst">{recept.uputstvo}</p>
