@@ -1,6 +1,7 @@
 import React from "react";
 import "../styles/NavBar.css";
 import axios from "axios";
+import { useState, useEffect } from "react";
 
 function NavBar({ token, addToken }) {
   function handleLogout(e) {
@@ -18,7 +19,8 @@ function NavBar({ token, addToken }) {
       .request(config)
       .then((response) => {
         console.log(JSON.stringify(response.data.message));
-        window.sessionStorage.setItem("auth_token", null);
+        window.sessionStorage.removeItem("auth_token");
+        setUser(null);
         addToken(null);
         alert("Uspešno ste se odjavili.");
       })
@@ -26,16 +28,36 @@ function NavBar({ token, addToken }) {
         console.log(error);
       });
   }
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    if (token) {
+      axios
+        .get("/api/me", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          setUser(res.data);
+        });
+    }
+  }, [token]);
 
   return (
     <nav
       className="navbar navbar-dark bg-success sticky-top"
       aria-label="First navbar example"
     >
-      <div className="container-fluid">
-        <a className="navbar-brand" href="/">
-          Zdravi Zalogaji
-        </a>
+      <div className="container-fluid d-flex align-items-center">
+        <div className="d-flex align-items-center">
+          <a className="navbar-brand" href="/">
+            Zdravi Zalogaji
+          </a>
+          <span className="navbar-text text-white ms-2">
+            {user ? `👋 Zdravo, ${user.korisnickoIme}` : "👤 Gost"}
+          </span>
+        </div>
 
         <button
           className="navbar-toggler"

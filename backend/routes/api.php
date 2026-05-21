@@ -56,6 +56,10 @@ Route::middleware(['auth:sanctum', 'App\Http\Middleware\CheckUserType:registrova
 
 //RUTE ZA GOSTA
 
+Route::get('/me', function (Request $request) {
+    return $request->user();
+})->middleware('auth:sanctum'); // ili auth:api
+
 //Slucajevi koriscenja za proizvod
 Route::get('/proizvodi', [ProizvodController::class, 'index']);
 /*Route::post('/dodaj_proizvod', [ProizvodController::class, 'store']);
