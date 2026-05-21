@@ -1,6 +1,6 @@
 import React from "react";
 
-function KorpaItem({ s }) {
+function KorpaItem({ s, onRemove }) {
   const ukupnaCena = s.kolicina * s.proizvod?.cena;
 
   return (
@@ -27,7 +27,10 @@ function KorpaItem({ s }) {
         </p>
       </div>
 
-      {/* Ovdje kasnije možeš dodati dugme za brisanje "X" */}
+      {/* Dugme za brisanje */}
+      <button className="remove-btn" onClick={() => onRemove(s.idProizvod)}>
+        Ukloni
+      </button>
     </div>
   );
 }

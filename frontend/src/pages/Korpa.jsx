@@ -9,27 +9,47 @@ function Korpa() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  const token = sessionStorage.getItem("auth_token");
+
+  const fetchKorpa = async () => {
+    try {
+      const res = await axios.get("http://127.0.0.1:8000/api/korpa", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setKorpa(res.data.korpa);
+      setStavke(res.data.stavke);
+    } catch (err) {
+      setError(err.response?.data?.message || "Greška pri učitavanju korpe");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchKorpa = async () => {
-      try {
-        const token = sessionStorage.getItem("auth_token");
-        const res = await axios.get("http://127.0.0.1:8000/api/korpa", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        setKorpa(res.data.korpa);
-        setStavke(res.data.stavke);
-      } catch (err) {
-        setError(err.response?.data?.message || "Greška pri učitavanju korpe");
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchKorpa();
   }, []);
+
+  const handleRemove = async (idProizvod) => {
+    if (
+      !window.confirm(
+        "Da li ste sigurni da želite da uklonite ovaj proizvod iz korpe?",
+      )
+    )
+      return;
+
+    try {
+      await axios.delete(`/api/korpa/${korpa.idKorpa}/proizvod/${idProizvod}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      fetchKorpa();
+    } catch (err) {
+      alert(
+        "Greška pri brisanju: " + (err.response?.data?.message || err.message),
+      );
+    }
+  };
 
   if (loading)
     return (
@@ -52,7 +72,9 @@ function Korpa() {
         {stavke.length === 0 ? (
           <p className="empty-cart-msg">Korpa je trenutno prazna.</p>
         ) : (
-          stavke.map((s) => <KorpaItem key={s.idKorpaStavka} s={s} />)
+          stavke.map((s) => (
+            <KorpaItem key={s.idKorpaStavka} s={s} onRemove={handleRemove} />
+          ))
         )}
       </div>
 
