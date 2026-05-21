@@ -192,4 +192,29 @@ class ReceptController extends Controller
         //download() ce naterati browser da preuzme fajl, stream() bi ga otvorio u tabu
         return $pdf->download('recept-' . $idRecept . '.pdf');
     }
+
+    public function search(Request $request)
+    {
+        $query = Recept::with('receptProizvod');
+
+        // Filter po kategoriji
+        if ($request->filled('kategorija')) {
+            $query->where('kategorija', $request->kategorija);
+        }
+
+        // Filter po vremenu pripreme
+        if ($request->filled('vremePripreme')) {
+            $vreme = $request->vremePripreme;
+            if ($vreme == 'do_30') $query->where('vremePripreme', '<=', 30);
+            elseif ($vreme == '30_60') $query->whereBetween('vremePripreme', [30, 60]);
+            elseif ($vreme == 'preko_60') $query->where('vremePripreme', '>', 60);
+        }
+
+        $recepti = $query->paginate(10);
+
+        return response()->json([
+            'message' => 'Pretraga uspešna.',
+            'data' => $recepti
+        ], 200);
+    }
 }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ReceptItem from "../components/ReceptItem";
-import "../styles/Recepti.css"; // Uvozimo novi CSS za blog izgled
+import "../styles/Recepti.css";
 
 function Recepti() {
   const [recepti, setRecepti] = useState([]);
@@ -9,46 +9,81 @@ function Recepti() {
   const [lastPage, setLastPage] = useState(1);
   const [loading, setLoading] = useState(true);
 
+  // Ostaju samo ova dva filtera
+  const [kategorija, setKategorija] = useState("");
+  const [vreme, setVreme] = useState("");
+
   useEffect(() => {
     setLoading(true);
-    // Koristimo backticks `` za ispravnu paginaciju
     axios
-      .get(`http://127.0.0.1:8000/api/recepti?page=${currentPage}`)
+      .get(`http://127.0.0.1:8000/api/recepti/search`, {
+        params: {
+          page: currentPage,
+          kategorija: kategorija,
+          vremePripreme: vreme,
+        },
+      })
       .then((res) => {
-        console.log("Podaci sa API-ja:", res.data);
-
-        // Pristupamo dubokoj strukturi: res -> data -> data -> data
-        const nizRecepata = res.data.data.data;
-        const ukupnoStranica = res.data.data.last_page;
-
-        setRecepti(nizRecepata);
-        setLastPage(ukupnoStranica);
+        // Pristupamo tvojoj strukturi: data -> data -> data
+        setRecepti(res.data.data.data);
+        setLastPage(res.data.data.last_page);
         setLoading(false);
       })
       .catch((err) => {
-        console.error("Greška pri učitavanju recepata:", err);
+        console.error(err);
         setLoading(false);
       });
-  }, [currentPage]);
+  }, [currentPage, kategorija, vreme]); // useEffect prati samo kategoriju i vreme
 
-  if (loading) {
-    return (
-      <div className="recepti-container">
-        <div className="text-center mt-5">
-          <h3>Pripremanje kulinarske inspiracije...</h3>
-        </div>
-      </div>
-    );
-  }
+  const resetFilters = () => {
+    setKategorija("");
+    setVreme("");
+    setCurrentPage(1);
+  };
 
   return (
     <div className="recepti-container">
       <h1 className="menuTitle">Naši Recepti</h1>
-      <p className="subtitle">Pronađite savršen obrok za svaku priliku</p>
 
-      {/* Lista recepata - ređaju se jedan ispod drugog */}
+      {/* FILTERI BEZ KALORIJA */}
+      <div className="filters-section">
+        <select
+          value={kategorija}
+          onChange={(e) => {
+            setKategorija(e.target.value);
+            setCurrentPage(1);
+          }}
+        >
+          <option value="">Sve kategorije</option>
+          <option value="Doručak">Doručak</option>
+          <option value="Ručak">Ručak</option>
+          <option value="Večera">Večera</option>
+          <option value="Salate">Salate</option>
+          <option value="Desert">Deserti</option>
+        </select>
+
+        <select
+          value={vreme}
+          onChange={(e) => {
+            setVreme(e.target.value);
+            setCurrentPage(1);
+          }}
+        >
+          <option value="">Vreme pripreme</option>
+          <option value="do_30">Do 30 min</option>
+          <option value="30_60">30 - 60 min</option>
+          <option value="preko_60">Preko 60 min</option>
+        </select>
+
+        <button className="btn-reset" onClick={resetFilters}>
+          Resetuj
+        </button>
+      </div>
+
       <div className="recepti-blog-list">
-        {Array.isArray(recepti) && recepti.length > 0 ? (
+        {loading ? (
+          <h3 className="text-center mt-5">Učitavanje...</h3>
+        ) : Array.isArray(recepti) && recepti.length > 0 ? (
           recepti.map((r) => (
             <ReceptItem
               key={r.idRecept}
@@ -63,39 +98,39 @@ function Recepti() {
           ))
         ) : (
           <div className="text-center mt-5">
-            <p>Trenutno nema recepata za prikaz.</p>
+            <p>Nema recepata koji odgovaraju izabranim filterima.</p>
           </div>
         )}
       </div>
 
-      {/* Kontrole za paginaciju na dnu strane */}
-      <div className="pagination-container">
-        <button
-          className="btn-pagination"
-          disabled={currentPage === 1}
-          onClick={() => {
-            setCurrentPage(currentPage - 1);
-            window.scrollTo(0, 0); // Vraća na vrh stranice pri promeni
-          }}
-        >
-          &laquo; Prethodna
-        </button>
-
-        <span className="page-info">
-          Stranica <strong>{currentPage}</strong> od {lastPage}
-        </span>
-
-        <button
-          className="btn-pagination"
-          disabled={currentPage === lastPage}
-          onClick={() => {
-            setCurrentPage(currentPage + 1);
-            window.scrollTo(0, 0); // Vraća na vrh stranice pri promeni
-          }}
-        >
-          Sledeća &raquo;
-        </button>
-      </div>
+      {/* Paginacija ostaje ista */}
+      {!loading && recepti.length > 0 && (
+        <div className="pagination-container">
+          <button
+            className="btn-pagination"
+            disabled={currentPage === 1}
+            onClick={() => {
+              setCurrentPage(currentPage - 1);
+              window.scrollTo(0, 0);
+            }}
+          >
+            &laquo; Prethodna
+          </button>
+          <span className="page-info">
+            Stranica <strong>{currentPage}</strong> od {lastPage}
+          </span>
+          <button
+            className="btn-pagination"
+            disabled={currentPage === lastPage}
+            onClick={() => {
+              setCurrentPage(currentPage + 1);
+              window.scrollTo(0, 0);
+            }}
+          >
+            Sledeća &raquo;
+          </button>
+        </div>
+      )}
     </div>
   );
 }
