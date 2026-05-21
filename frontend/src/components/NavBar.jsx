@@ -9,10 +9,14 @@ function NavBar({ token, user, addToken, addUser }) {
   const location = useLocation();
   const isActive = (path) => location.pathname === path;
 
+  const [isNavOpen, setIsNavOpen] = useState(false);
+  const closeMenu = () => setIsNavOpen(false);
+
   const kategorijeRecepata = ["Doručak", "Ručak", "Večera", "Salate", "Desert"];
 
   function handleLogout(e) {
     e.preventDefault();
+    closeMenu();
     let config = {
       method: "post",
       maxBodyLength: Infinity,
@@ -70,75 +74,69 @@ function NavBar({ token, user, addToken, addUser }) {
     >
       <div className="container-fluid d-flex align-items-center">
         <div className="d-flex align-items-center">
-          <a className="navbar-brand" href="/">
-            {/* IKONICA LOGOA */}
+          <a className="navbar-brand d-flex align-items-center" href="/">
             <img src="/logo.png" alt="Logo" className="navbar-logo" />
             Zdravi Zalogaji
           </a>
-          <span className="navbar-text text-white ms-2">
-            {user ? `👋 Zdravo, ${user.korisnickoIme}` : "👤 Gost"}
+          <span className="navbar-text text-white ms-2 d-none d-sm-inline">
+            {user ? `👋 ${user.korisnickoIme}` : "👤 Gost"}
           </span>
         </div>
 
+        {/* MODIFIKOVANO DUGME */}
         <button
-          className="navbar-toggler"
+          className={`navbar-toggler ${isNavOpen ? "opened" : ""}`}
           type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarsExample01"
-          aria-controls="navbarsExample01"
-          aria-expanded="false"
+          onClick={() => setIsNavOpen(!isNavOpen)}
           aria-label="Toggle navigation"
         >
-          <span className="navbar-toggler-icon"></span>
+          {/* Umesto standardne ikonice, pravimo našu koja može da se animira u X */}
+          <div className="hamburger-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
         </button>
 
-        <div className="collapse navbar-collapse" id="navbarsExample01">
+        {/* MODIFIKOVAN COLLAPSE DIV */}
+        <div className={`collapse navbar-collapse ${isNavOpen ? "show" : ""}`}>
           <ul className="navbar-nav me-auto mb-2">
             <li className="nav-item">
               <a
                 className={`nav-link ${isActive("/") ? "active fw-bold" : ""}`}
-                aria-current="page"
                 href="/"
+                onClick={closeMenu}
               >
                 Početna
               </a>
             </li>
 
             <li className="nav-item dropdown d-flex align-items-center">
-              {/* GLAVNI LINK ZA RECEPTE */}
               <a
-                className={`nav-link  ${
-                  location.pathname.startsWith("/recepti") ||
-                  location.pathname === "/pretraga_po_sastojcima"
-                    ? "active fw-bold"
-                    : ""
-                }`}
+                className={`nav-link ${location.pathname.startsWith("/recepti") ? "active fw-bold" : ""}`}
                 href="/recepti"
-                // onClick={() => handleCategoryClick("")}
+                onClick={closeMenu}
               >
                 Recepti
               </a>
-
-              {/* SAMO STRELICA ZA DROPDOWN */}
               <span
                 className="nav-link dropdown-toggle dropdown-toggle-split"
-                role="button"
                 data-bs-toggle="dropdown"
-                aria-expanded="false"
               />
               <ul className="dropdown-menu">
                 {kategorijeRecepata.map((kat) => (
                   <li key={kat}>
-                    <a
+                    <button
                       className="dropdown-item"
-                      href="#" // Ne treba href da preusmerava, koristimo onClick
-                      onClick={(e) => {
-                        e.preventDefault(); // Sprečavamo default ponašanje linka
-                        handleCategoryClick(kat);
+                      onClick={() => {
+                        navigate("/recepti", {
+                          state: { izabranaKategorija: kat },
+                        });
+                        closeMenu();
                       }}
                     >
                       {kat}
-                    </a>
+                    </button>
                   </li>
                 ))}
               </ul>
@@ -148,29 +146,30 @@ function NavBar({ token, user, addToken, addUser }) {
               <a
                 className={`nav-link ${isActive("/proizvodi") ? "active fw-bold" : ""}`}
                 href="/proizvodi"
+                onClick={closeMenu}
               >
                 Proizvodi
               </a>
             </li>
 
-            <li className="nav-item">
-              {token == null ? (
-                <></>
-              ) : (
+            {token && (
+              <li className="nav-item">
                 <a
                   className={`nav-link ${isActive("/korpa") ? "active fw-bold" : ""}`}
                   href="/korpa"
+                  onClick={closeMenu}
                 >
                   Korpa
                 </a>
-              )}
-            </li>
+              </li>
+            )}
 
             <li className="nav-item">
               {token == null ? (
                 <a
                   className={`nav-link ${isActive("/login") ? "active fw-bold" : ""}`}
                   href="/login"
+                  onClick={closeMenu}
                 >
                   Prijavi se
                 </a>
@@ -181,15 +180,6 @@ function NavBar({ token, user, addToken, addUser }) {
               )}
             </li>
           </ul>
-
-          {/* <form role="search">
-            <input
-                className="form-control"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-            />
-            </form> */}
         </div>
       </div>
       {showSuccess && (

@@ -1,3 +1,99 @@
+/* --- OSNOVNI NAVBAR STILOVI --- */
+.custom-navbar {
+  background-color: #3e8839 !important; /* Tvoja nova pastelna zelena */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 10px 0;
+  transition: background-color 0.3s ease;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  color: white !important;
+}
+
+.navbar-logo {
+  height: 40px;
+  width: auto;
+  margin-right: 12px;
+  object-fit: contain;
+  filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.navbar-nav {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar-nav .nav-link {
+  transition: all 0.3s ease;
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #f9fbf2 !important; /* Svetla boja na hover */
+}
+
+/* --- TOGGLER (HAMBURGER) STILOVI --- */
+
+/* Uklanjanje Bootstrap okvira pri kliku koji je pravio "bold" efekat */
+.navbar-toggler {
+  border: none !important;
+  padding: 10px;
+  background: transparent !important;
+}
+
+.navbar-toggler:focus {
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* Kontejner za crtice */
+.hamburger-icon {
+  width: 28px;
+  height: 20px; /* Fiksna visina */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centriramo ih */
+  gap: 5px; /* FIKSAN RAZMAK između crtica rešava problem debljine */
+  cursor: pointer;
+}
+
+/* Stil za tri crtice */
+.hamburger-icon span {
+  display: block;
+  height: 3px !important; /* Forsiramo tačno 3px za sve */
+  width: 100%;
+  background-color: white;
+  border-radius: 4px;
+  transition: all 0.3s ease-in-out;
+  /* Dodajemo ovo da sprečimo browser da "muti" ivice */
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+/* --- ANIMACIJA U "X" (Kada dugme ima klasu .opened) --- */
+
+/* Prva crtica se rotira */
+.navbar-toggler.opened .hamburger-icon span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+/* Srednja crtica nestaje */
+.navbar-toggler.opened .hamburger-icon span:nth-child(2) {
+  opacity: 0;
+  transform: translateX(-10px);
+}
+
+/* Treća crtica se rotira u suprotnom smeru */
+.navbar-toggler.opened .hamburger-icon span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+/* --- DROPDOWN STILOVI --- */
 .nav-item.dropdown {
   position: relative;
   display: flex;
@@ -10,6 +106,9 @@
   left: 0;
   margin-top: 0.35rem;
   z-index: 9999;
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .nav-item.dropdown:hover .dropdown-menu {
@@ -24,40 +123,31 @@
   min-width: 1.5rem;
   padding-left: 0.25rem;
   padding-right: 0.25rem;
+  cursor: pointer;
 }
 
-.navbar-nav {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+/* Stil za dropdown stavke */
+.dropdown-item:hover {
+  background-color: #f9fbf2;
+  color: #8cb38a;
 }
 
-.custom-navbar {
-  background-color: #467543 !important; /* Lepša, prirodna zelena */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  padding: 10px 0;
-}
+/* --- RESPONZIVNOST --- */
+@media (max-width: 991px) {
+  .navbar-nav {
+    padding-top: 20px;
+    align-items: flex-start; /* Poravnanje levo na mobilnom */
+  }
 
-.navbar-brand {
-  display: flex;
-  align-items: center;
-  font-weight: bold;
-}
+  .nav-item.dropdown {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 
-.navbar-nav .nav-link {
-  transition: color 0.3s ease;
-}
-
-.navbar-nav .nav-link:hover {
-  color: #f9fbf2 !important; /* Tvoja svetla boja pozadine */
-}
-
-.navbar-logo {
-  height: 40px; /* Podesi visinu po želji */
-  width: auto; /* Održava proporcije slike */
-  margin-right: 12px; /* Razmak između ikonice i teksta "Zdravi Zalogaji" */
-  object-fit: contain;
-  /* Opciono: ako želiš da ikonica malo "odskoči" */
-  filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.1));
+  .nav-item.dropdown .dropdown-menu {
+    position: static; /* Dropdown se širi unutar menija na mobilnom */
+    width: 100%;
+    box-shadow: none;
+    background-color: rgba(255, 255, 255, 0.1);
+  }
 }
