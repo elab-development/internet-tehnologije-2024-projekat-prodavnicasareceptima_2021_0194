@@ -97,7 +97,9 @@ function NavBar({ token, addToken }) {
             </li>
 
             <li className="nav-item">
-              <a className="nav-link">Proizvodi</a>
+              <a className="nav-link" href="/proizvodi">
+                Proizvodi
+              </a>
             </li>
 
             {token == null ? (

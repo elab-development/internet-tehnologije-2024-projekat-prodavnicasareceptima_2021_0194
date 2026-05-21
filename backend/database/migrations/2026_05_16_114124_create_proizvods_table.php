@@ -17,6 +17,7 @@ return new class extends Migration
             $table->decimal('cena', 6, 2);
             $table->string('mernaJedinica')->nullable();
             $table->string('kategorija')->nullable();
+            $table->string('slika')->nullable();
             $table->timestamps();
         });
     }

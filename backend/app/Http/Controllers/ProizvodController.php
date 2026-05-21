@@ -14,7 +14,7 @@ class ProizvodController extends Controller
      */
     public function index()
     {
-        $proizvodi=Proizvod::all();
+        $proizvodi=Proizvod::paginate(10);
         return response()->json($proizvodi);
         
     }
@@ -38,7 +38,8 @@ class ProizvodController extends Controller
             'cena' => 'required|numeric|min:0',
             'kategorija' => 'required|string|max:255',
             'mernaJedinica'=> 'required|string|max:255',
-            //'slika' => 'required|string|max:255'
+            'slika' => 'nullable|url'
+            //'slika' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
         if ($validator->fails()) {
@@ -46,6 +47,13 @@ class ProizvodController extends Controller
                 'errors' => $validator->errors()
             ], 400);
         }
+
+        // LOGIKA ZA SLIKU
+        /*$path = null;
+        if ($request->hasFile('slika')) {
+            // Čuva sliku u folderu storage/app/public/proizvodi
+            $path = $request->file('slika')->store('proizvodi', 'public');
+        }*/
        
         $validated = $validator->validated();
 
@@ -54,7 +62,8 @@ class ProizvodController extends Controller
             'naziv' => $validated['naziv'],
             'cena' => $validated['cena'],
             'kategorija' =>$validated['kategorija'],
-            'mernaJedinica' =>$validated['mernaJedinica']
+            'mernaJedinica' =>$validated['mernaJedinica'],
+            'slika' => $validated['slika'] // Ovde upisujemo putanju (npr. "proizvodi/abc.jpg")
         ]);
   
         return response()->json([
@@ -90,7 +99,7 @@ class ProizvodController extends Controller
             'cena' => 'numeric|min:0',
             'kategorija' => 'string|max:255',
             'mernaJedinica'=> 'string|max:255',
-            //'slika' => 'required|string|max:255'
+            'slika' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
         if ($validator->fails()) {
@@ -103,6 +112,14 @@ class ProizvodController extends Controller
 
         //Nalazenje proizvoda po id-u
         $proizvod = Proizvod::findOrFail($idProizvod);
+
+        /*$data = $request->only(['naziv', 'cena', 'kategorija', 'mernaJedinica']);
+
+        if ($request->hasFile('slika')) {
+            // Čuvamo novu sliku
+            $path = $request->file('slika')->store('proizvodi', 'public');
+            $data['slika'] = $path;
+        }*/
 
         //Azuriranje proizvoda
         $proizvod->update($validated);
@@ -156,7 +173,8 @@ class ProizvodController extends Controller
             $query->where('kategorija', 'like', '%' . $validated['kategorija'] . '%');
         }
         
-        $proizvodi = $query->get();
+        //$proizvodi = $query->get();
+        $proizvodi = $query->paginate(10);
         if ($proizvodi->isEmpty()) {
             return response()->json([
                 'message' => 'Proizvod nije pronadjen.',
