@@ -9,11 +9,20 @@ function Korpa() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  // Stanja za formu i checkout
+  const [prikaziFormu, setPrikaziFormu] = useState(false);
+  const [formData, setFormData] = useState({
+    imeKupca: "",
+    prezimeKupca: "",
+    emailKupca: "",
+    adresaIsporuke: "",
+  });
+
   const token = sessionStorage.getItem("auth_token");
 
   const fetchKorpa = async () => {
     try {
-      const res = await axios.get("http://127.0.0.1:8000/api/korpa", {
+      const res = await axios.get("/api/korpa", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -51,6 +60,33 @@ function Korpa() {
     }
   };
 
+  // FUNKCIJA ZA FINALNU KUPOVINU (CHECKOUT)
+  const handleFinalnaKupovina = async (e) => {
+    e.preventDefault(); // Sprečavamo osvežavanje stranice
+
+    try {
+      const res = await axios.post("/api/potvrdi_kupovinu", formData, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      alert(res.data.message); // "Uspešno ste izvršili kupovinu!"
+
+      // Resetujemo stanja jer je korpa sada prazna na backendu
+      setStavke([]);
+      setKorpa(null);
+      setPrikaziFormu(false);
+    } catch (err) {
+      console.error(err);
+      alert(
+        err.response?.data?.message || "Došlo je do greške prilikom kupovine.",
+      );
+    }
+  };
+
+  const handleInputChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
   if (loading)
     return (
       <div className="korpa-container">
@@ -66,32 +102,109 @@ function Korpa() {
 
   return (
     <div className="korpa-container">
-      <h1 className="korpa-title">Vaša Korpa</h1>
+      <h1 className="korpa-title">
+        {prikaziFormu ? "Podaci za dostavu" : "Vaša Korpa"}
+      </h1>
 
       <div className="korpa-list">
-        {stavke.length === 0 ? (
-          <p className="empty-cart-msg">Korpa je trenutno prazna.</p>
+        {!prikaziFormu ? (
+          /* KORAK 1: LISTA STAVKI */
+          <>
+            {stavke.length === 0 ? (
+              <p className="empty-cart-msg">Korpa je trenutno prazna.</p>
+            ) : (
+              stavke.map((s) => (
+                <KorpaItem
+                  key={s.idKorpaStavka}
+                  s={s}
+                  onRemove={handleRemove}
+                />
+              ))
+            )}
+
+            {stavke.length > 0 && (
+              <div className="korpa-total">
+                <h3>
+                  Ukupno za uplatu:{" "}
+                  <span style={{ color: "#2d5a27" }}>
+                    {korpa?.ukupnaCena} RSD
+                  </span>
+                </h3>
+                <button
+                  className="btn btn-success btn-lg mt-3 checkout-btn"
+                  onClick={() => setPrikaziFormu(true)}
+                >
+                  Nastavi na plaćanje
+                </button>
+              </div>
+            )}
+          </>
         ) : (
-          stavke.map((s) => (
-            <KorpaItem key={s.idKorpaStavka} s={s} onRemove={handleRemove} />
-          ))
+          /* FORMA ZA CHECKOUT */
+
+          <form className="checkout-form" onSubmit={handleFinalnaKupovina}>
+            <div className="checkout-summary">
+              <h3>
+                Ukupno za uplatu: <span>{korpa?.ukupnaCena} RSD</span>
+              </h3>
+              <p>Pregledajte svoje podatke pre potvrde kupovine.</p>
+              <hr />
+            </div>
+            <div className="form-group">
+              <label>Ime</label>
+              <input
+                type="text"
+                name="imeKupca"
+                required
+                onChange={handleInputChange}
+                value={formData.imeKupca}
+              />
+            </div>
+            <div className="form-group">
+              <label>Prezime</label>
+              <input
+                type="text"
+                name="prezimeKupca"
+                required
+                onChange={handleInputChange}
+                value={formData.prezimeKupca}
+              />
+            </div>
+            <div className="form-group">
+              <label>Email</label>
+              <input
+                type="email"
+                name="emailKupca"
+                required
+                onChange={handleInputChange}
+                value={formData.emailKupca}
+              />
+            </div>
+            <div className="form-group">
+              <label>Adresa isporuke</label>
+              <textarea
+                name="adresaIsporuke"
+                required
+                onChange={handleInputChange}
+                value={formData.adresaIsporuke}
+              ></textarea>
+            </div>
+
+            <div className="form-buttons">
+              <button
+                type="button"
+                className="btn btn-secondary"
+                onClick={() => setPrikaziFormu(false)}
+              >
+                Nazad na korpu
+              </button>
+              <button type="submit" className="btn btn-success">
+                Potvrdi kupovinu
+              </button>
+            </div>
+          </form>
         )}
       </div>
-
-      {stavke.length > 0 && (
-        <div className="korpa-total">
-          <h3>
-            Ukupno za uplatu:{" "}
-            <span style={{ color: "#2d5a27" }}>{korpa?.ukupnaCena} RSD</span>
-          </h3>
-          <button
-            className="btn btn-success btn-lg mt-3"
-            style={{ borderRadius: "25px", padding: "10px 30px" }}
-          >
-            Nastavi na plaćanje
-          </button>
-        </div>
-      )}
     </div>
   );
 }
