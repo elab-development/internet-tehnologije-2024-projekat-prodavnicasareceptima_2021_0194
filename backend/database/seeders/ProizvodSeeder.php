@@ -54,7 +54,7 @@ class ProizvodSeeder extends Seeder
         }*/
 
         $proizvodi = [
-            /*[
+            [
                 'naziv' => 'Ovsene pahuljice',
                 'cena' => 180,
                 'kategorija' => 'Zitarice',
@@ -109,7 +109,7 @@ class ProizvodSeeder extends Seeder
                 'kategorija' => 'Masti',
                 'mernaJedinica' => 'ml',
                 'slika' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLze7Hjwnsqi1jG5FdzCtTHTWh_X4JreFl9A&s'
-            ],*/
+            ],
             [
                 'naziv' => 'Jagode',
                 'cena' => 500,

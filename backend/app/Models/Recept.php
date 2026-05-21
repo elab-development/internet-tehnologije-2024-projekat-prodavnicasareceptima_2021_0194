@@ -19,6 +19,7 @@ class Recept extends Model
         'kategorija',
         'brojKalorija',
         'brojPorcija',
+        'slika'
     ];
 
     public function receptProizvod() {

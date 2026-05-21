@@ -1,5 +1,7 @@
 import React from "react";
 import "../styles/Home.css";
+import Proizvodi from "../pages/Proizvodi";
+import Recepti from "../pages/Recepti";
 
 function Home({ token }) {
   return (
@@ -19,11 +21,11 @@ function Home({ token }) {
                 Početna
               </a>
 
-              <a className="nav-link fw-bold py-1 px-0" href="#">
+              <a className="nav-link fw-bold py-1 px-0" href="/recepti">
                 Recepti
               </a>
 
-              <a className="nav-link fw-bold py-1 px-0" href="#">
+              <a className="nav-link fw-bold py-1 px-0" href="/proizvodi">
                 Proizvodi
               </a>
               {token == null ? (
