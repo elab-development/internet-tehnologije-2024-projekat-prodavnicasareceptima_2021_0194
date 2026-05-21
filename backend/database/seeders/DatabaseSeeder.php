@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);*/
 
-        /*User::create([
+        User::create([
             'korisnickoIme' => 'Admin',
             'lozinka' => Hash::make('admin123'),
             'tipKorisnika' => 'admin'
@@ -36,7 +36,7 @@ class DatabaseSeeder extends Seeder
             'korisnickoIme' => 'mila',
             'lozinka' => Hash::make('mila12345'),
             'tipKorisnika' => 'registrovani'
-        ]);*/
+        ]);
 
         //Proizvod::factory(3)->create();
 
@@ -44,7 +44,7 @@ class DatabaseSeeder extends Seeder
             //ProizvodSeeder::class,
             //KupovinaSeeder::class,
             //KupovinaStavkaSeeder::class,
-            ReceptSeeder::class,
+            //ReceptSeeder::class,
             //ReceptProizvodSeeder::class,
             //KorpaSeeder::class
         ]);

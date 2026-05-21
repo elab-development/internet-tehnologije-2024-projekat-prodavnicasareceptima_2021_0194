@@ -18,19 +18,51 @@ function Register() {
     setUserData(newUserData);
   }
 
+  const [errorMessage, setErrorMessage] = useState();
+  const [showSuccess, setShowSuccess] = useState(false);
+
+  const styles = {
+    overlay: {
+      position: "fixed",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      background: "rgba(0,0,0,0.5)",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      zIndex: 9999,
+    },
+    popup: {
+      background: "white",
+      padding: "25px",
+      borderRadius: "12px",
+      textAlign: "center",
+      width: "280px",
+      boxShadow: "0 10px 30px rgba(0,0,0,0.2)",
+    },
+  };
+
   function handleRegister(e) {
     e.preventDefault();
+    setErrorMessage("");
     axios
       .post("/api/register", userData)
       .then((res) => {
         console.log(res.data);
         if (res.data.success === true) {
           window.sessionStorage.setItem("auth_token", res.data.access_token);
-          navigate("/login");
+          // eslint-disable-next-line no-alert
+          setShowSuccess(true);
+          //navigate("/login");
+        } else {
+          setErrorMessage(res.data.message);
         }
       })
       .catch((e) => {
         console.log(e);
+        setErrorMessage("Došlo je do greške");
       });
   }
 
@@ -80,6 +112,7 @@ function Register() {
                   Lozinka
                 </label>
               </div>
+              {errorMessage && <p className="text-danger">{errorMessage}</p>}
 
               {/* Register BUTTON */}
               <div className="text-center text-lg-start mt-4 pt-2">
@@ -105,6 +138,23 @@ function Register() {
           </div>
         </div>
       </div>
+      {showSuccess && (
+        <div style={styles.overlay}>
+          <div style={styles.popup}>
+            <h2>✔ Uspeh</h2>
+            <p>Uspešno ste se registrovali!</p>
+
+            <button
+              onClick={() => {
+                setShowSuccess(false);
+                navigate("/login");
+              }}
+            >
+              OK
+            </button>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

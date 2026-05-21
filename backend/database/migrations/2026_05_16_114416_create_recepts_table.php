@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('vremePripreme');
             $table->integer('brojPorcija');
             $table->integer('brojKalorija');
-            $table->string('slika')->nullable();
+            // $table->string('slika')->nullable();
             $table->timestamps();
         });
     }

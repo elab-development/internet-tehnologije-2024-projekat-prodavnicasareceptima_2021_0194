@@ -18,8 +18,12 @@ function Login({ addToken }) {
 
   let navigate = useNavigate();
 
+  const [errorMessage, setErrorMessage] = useState();
+  const [showSuccess, setShowSuccess] = useState(false);
+
   function handleLogin(e) {
     e.preventDefault();
+    setErrorMessage("");
     axios
       .post("/api/login", userData)
       .then((res) => {
@@ -27,13 +31,41 @@ function Login({ addToken }) {
         if (res.data.success === true) {
           window.sessionStorage.setItem("auth_token", res.data.access_token);
           addToken(res.data.access_token);
-          navigate("/");
+          setShowSuccess(true);
+        } else {
+          setErrorMessage(
+            "Pogrešno korisničko ime ili lozinka, pokušajte ponovo.",
+          );
         }
       })
       .catch((e) => {
         console.log(e);
+        setErrorMessage("Došlo je do greške, pokušajte ponovo");
       });
   }
+
+  const styles = {
+    overlay: {
+      position: "fixed",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      background: "rgba(0,0,0,0.5)",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      zIndex: 9999,
+    },
+    popup: {
+      background: "white",
+      padding: "25px",
+      borderRadius: "12px",
+      textAlign: "center",
+      width: "280px",
+      boxShadow: "0 10px 30px rgba(0,0,0,0.2)",
+    },
+  };
 
   return (
     <section className="vh-100">
@@ -81,6 +113,7 @@ function Login({ addToken }) {
                   Lozinka
                 </label>
               </div>
+              {errorMessage && <p className="text-danger">{errorMessage}</p>}
 
               {/* LOGIN BUTTON */}
               <div className="text-center text-lg-start mt-4 pt-2">
@@ -106,6 +139,23 @@ function Login({ addToken }) {
           </div>
         </div>
       </div>
+      {showSuccess && (
+        <div style={styles.overlay}>
+          <div style={styles.popup}>
+            <h2>✔ Uspeh</h2>
+            <p>Uspešno ste se prijavili!</p>
+
+            <button
+              onClick={() => {
+                setShowSuccess(false);
+                navigate("/");
+              }}
+            >
+              OK
+            </button>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

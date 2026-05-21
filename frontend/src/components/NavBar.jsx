@@ -20,6 +20,7 @@ function NavBar({ token, addToken }) {
         console.log(JSON.stringify(response.data.message));
         window.sessionStorage.setItem("auth_token", null);
         addToken(null);
+        alert("Uspešno ste se odjavili.");
       })
       .catch((error) => {
         console.log(error);

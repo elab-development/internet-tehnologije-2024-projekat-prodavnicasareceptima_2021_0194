@@ -21,8 +21,21 @@ class AuthController extends Controller
             'tipKorisnika' => 'string|in:admin,registrovani,anonimni'
         ]); 
         
-        if ($validator->fails())
-            return response()->json(['success'=>false]); 
+        if ($validator->fails()) {
+            $msg = $validator->errors()->first();
+
+            $map = [
+                'The korisnicko ime field is required.' => 'Korisničko ime je obavezno.',
+                'The korisnicko ime has already been taken.' => 'Korisničko ime već postoji.',
+                'The lozinka field is required.' => 'Lozinka je obavezna.',
+                'The lozinka field must be at least 8 characters.' => 'Lozinka mora imati minimum 8 karaktera.',
+            ];
+
+            return response()->json([
+                'success' => false,
+                'message' => $map[$msg] ?? 'Neispravni podaci za registraciju'
+            ]);
+        }
         
         $user = User::create([ 
             'korisnickoIme' => $request->korisnickoIme,
