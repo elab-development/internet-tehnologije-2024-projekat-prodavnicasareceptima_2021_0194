@@ -1,0 +1,121 @@
+.detalji-container {
+  margin-top: 100px;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 30px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  margin-bottom: 50px;
+}
+
+.btn-back {
+  background: none;
+  border: none;
+  color: #2d5a27;
+  font-weight: bold;
+  cursor: pointer;
+  margin-bottom: 30px;
+  font-size: 16px;
+  transition: 0.2s;
+}
+
+.btn-back:hover {
+  color: #1b3a18;
+  text-decoration: underline;
+}
+
+/* HEADER */
+.recept-header {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+.recept-slika-okvir {
+  flex: 1;
+  height: 350px;
+}
+
+.recept-slika-okvir img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 15px;
+}
+
+.recept-osnovno {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.kategorija-label {
+  color: #2d5a27;
+  background: #eef5ec;
+  padding: 4px 12px;
+  border-radius: 20px;
+  width: fit-content;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.recept-osnovno h1 {
+  font-size: 38px;
+  color: #262c31;
+  margin-bottom: 20px;
+}
+
+.meta-info {
+  display: flex;
+  gap: 20px;
+  font-size: 17px;
+  color: #666;
+}
+
+/* SADRŽAJ */
+.recept-sadrzaj {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr; /* Sastojci uža kolona, uputstvo šira */
+  gap: 50px;
+  border-top: 1px solid #f0f0f0;
+  padding-top: 40px;
+}
+
+.recept-sadrzaj h3 {
+  color: #2d5a27;
+  margin-bottom: 20px;
+  font-size: 22px;
+}
+
+/* LISTA SASTOJAKA */
+.sastojci-lista {
+  list-style: none;
+  padding: 0;
+}
+
+.sastojak-red {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px dashed #eee;
+}
+
+.kolicina {
+  font-weight: bold;
+  color: #2d5a27;
+}
+
+.ime-proizvoda {
+  color: #444;
+}
+
+/* UPUTSTVO */
+.uputstvo-tekst {
+  line-height: 1.7;
+  color: #555;
+  font-size: 16px;
+}

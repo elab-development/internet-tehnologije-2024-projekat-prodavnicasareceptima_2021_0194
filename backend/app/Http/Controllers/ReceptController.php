@@ -77,13 +77,13 @@ class ReceptController extends Controller
      */
     public function show($idRecept)
     {
-        $recept = Recept::findOrFail($idRecept);
-
+        //$recept = Recept::findOrFail($idRecept);
+        $recept = Recept::with('receptProizvod')->findOrFail($idRecept);
         //$recept = Recept::with('receptProizvod')->findOrFail($idRecept);
         //return new ReceptResource($recept);
 
         return response()->json([
-            'message' => 'Recept je uspesno ucitani.',
+            'message' => 'Recept je uspesno ucitan.',
             'data' => $recept
         ], 200);
     }

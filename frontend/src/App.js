@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Proizvodi from "./pages/Proizvodi";
 import Recepti from "./pages/Recepti";
+import ReceptDetalji from "./pages/ReceptDetalji";
 import Navbar from "./components/NavBar";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useState } from "react";
@@ -25,6 +26,7 @@ function App() {
           <Route path="/" element={<Home token={token} />} />
           <Route path="/proizvodi" element={<Proizvodi />} />
           <Route path="/recepti" element={<Recepti />} />
+          <Route path="/recepti/:id" element={<ReceptDetalji />} />
         </Routes>
       </Router>
     </div>

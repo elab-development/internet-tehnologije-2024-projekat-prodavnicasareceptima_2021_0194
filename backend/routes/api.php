@@ -65,6 +65,7 @@ Route::get('/pretraga', [ProizvodController::class, 'search']);
 
 //Slucajevi koriscenja za recept
 Route::get('/recepti', [ReceptController::class, 'index']);
+Route::get('/recepti/{idRecept}', [ReceptController::class, 'show']);
 /*Route::post('/dodaj_recept', [ReceptController::class, 'store']);
 Route::put('/izmeni_recept/{idRecept}', [ReceptController::class, 'update']);
 Route::delete('/obrisi_recept/{idRecept}', [ReceptController::class, 'destroy']);*/
