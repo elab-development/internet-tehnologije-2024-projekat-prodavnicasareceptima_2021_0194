@@ -9,6 +9,8 @@ function NavBar({ token, user, addToken, addUser }) {
   const location = useLocation();
   const isActive = (path) => location.pathname === path;
 
+  const kategorijeRecepata = ["Doručak", "Ručak", "Večera", "Salate", "Desert"];
+
   function handleLogout(e) {
     e.preventDefault();
     let config = {
@@ -57,7 +59,10 @@ function NavBar({ token, user, addToken, addUser }) {
       boxShadow: "0 10px 30px rgba(0,0,0,0.2)",
     },
   };
-
+  const handleCategoryClick = (kategorija) => {
+    // Navigira na /recepti i šalje "state" objekat sa izabranom kategorijom
+    navigate("/recepti", { state: { izabranaKategorija: kategorija } });
+  };
   return (
     <nav
       className="navbar navbar-dark bg-success sticky-top"
@@ -98,7 +103,7 @@ function NavBar({ token, user, addToken, addUser }) {
             </li>
 
             <li className="nav-item dropdown d-flex align-items-center">
-              {/* LINK NA STRANICU */}
+              {/* GLAVNI LINK ZA RECEPTE */}
               <a
                 className={`nav-link  ${
                   location.pathname.startsWith("/recepti") ||
@@ -107,6 +112,7 @@ function NavBar({ token, user, addToken, addUser }) {
                     : ""
                 }`}
                 href="/recepti"
+                // onClick={() => handleCategoryClick("")}
               >
                 Recepti
               </a>
@@ -116,33 +122,23 @@ function NavBar({ token, user, addToken, addUser }) {
                 className="nav-link dropdown-toggle dropdown-toggle-split"
                 role="button"
                 data-bs-toggle="dropdown"
+                aria-expanded="false"
               />
               <ul className="dropdown-menu">
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Hladna predjela
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Obrok salate
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Supe i potaži
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Glavna jela
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Dezerti
-                  </a>
-                </li>
+                {kategorijeRecepata.map((kat) => (
+                  <li key={kat}>
+                    <a
+                      className="dropdown-item"
+                      href="#" // Ne treba href da preusmerava, koristimo onClick
+                      onClick={(e) => {
+                        e.preventDefault(); // Sprečavamo default ponašanje linka
+                        handleCategoryClick(kat);
+                      }}
+                    >
+                      {kat}
+                    </a>
+                  </li>
+                ))}
               </ul>
             </li>
 

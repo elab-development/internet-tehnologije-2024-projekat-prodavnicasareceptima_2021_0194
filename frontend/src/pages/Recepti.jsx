@@ -1,19 +1,31 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ReceptItem from "../components/ReceptItem";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "../styles/Recepti.css";
 
 function Recepti() {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Uhvati kategoriju ako je prosleđena iz navigacije
+  const initialCategory = location.state?.izabranaKategorija || "";
+
   const [recepti, setRecepti] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [lastPage, setLastPage] = useState(1);
   const [loading, setLoading] = useState(true);
 
   // Ostaju samo ova dva filtera
-  const [kategorija, setKategorija] = useState("");
+  const [kategorija, setKategorija] = useState(initialCategory);
   const [vreme, setVreme] = useState("");
+
+  // Dodatni useEffect za resetovanje stanja kada se promeni putanja
+  useEffect(() => {
+    setKategorija(location.state?.izabranaKategorija || "");
+    // setVreme("");
+    setCurrentPage(1);
+  }, [location.state?.izabranaKategorija, location.pathname]);
 
   useEffect(() => {
     setLoading(true);
@@ -70,7 +82,7 @@ function Recepti() {
           <option value="Ručak">Ručak</option>
           <option value="Večera">Večera</option>
           <option value="Salate">Salate</option>
-          <option value="Desert">Deserti</option>
+          <option value="Desert">Desert</option>
         </select>
 
         <select
@@ -114,7 +126,6 @@ function Recepti() {
         )}
       </div>
 
-      {/* Paginacija ostaje ista */}
       {!loading && recepti.length > 0 && (
         <div className="pagination-container">
           <button
