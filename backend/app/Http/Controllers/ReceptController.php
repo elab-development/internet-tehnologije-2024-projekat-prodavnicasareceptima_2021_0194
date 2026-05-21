@@ -178,7 +178,7 @@ class ReceptController extends Controller
 
     public function exportPdf($idRecept)
     {
-        //Pronadje recept sa svim njegovim sastojcima
+         //Pronadje recept sa svim njegovim sastojcima
         $recept = Recept::with('receptProizvod')->find($idRecept);
 
         if (!$recept) {

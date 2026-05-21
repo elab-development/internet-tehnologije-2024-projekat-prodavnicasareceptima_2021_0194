@@ -11,6 +11,7 @@ import Navbar from "./components/NavBar";
 import axios from "axios";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useState, useEffect } from "react";
+import Breadcrumbs from "./components/Breadcrumbs";
 
 function App() {
   const [token, setToken] = useState(
@@ -67,6 +68,7 @@ function App() {
           addToken={addToken}
           addUser={addUser}
         />
+        <Breadcrumbs />
         <Routes>
           <Route path="/login" element={<Login addToken={addToken} />} />
           <Route path="/register" element={<Register />} />
