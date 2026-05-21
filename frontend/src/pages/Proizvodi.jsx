@@ -8,11 +8,27 @@ function Proizvodi() {
   const [proizvodi, setProizvodi] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); // Pratimo na kojoj smo stranici
   const [lastPage, setLastPage] = useState(1); // Pratimo koliko ukupno ima stranica
+  const [idKorpa, setIdKorpa] = useState(null); // Čuvamo ID korpe u stanju
+
+  const token = sessionStorage.getItem("auth_token");
+
+  useEffect(() => {
+    if (token) {
+      axios
+        .get("/api/korpa", {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((res) => {
+          setIdKorpa(res.data.korpa.idKorpa); // Uzimamo ID iz odgovora
+        })
+        .catch((err) => console.log("Greška pri uzimanju korpe:", err));
+    }
+  }, [token]);
 
   useEffect(() => {
     // Dodajemo ?page= na kraj URL-a
     axios
-      .get(`http://127.0.0.1:8000/api/proizvodi?page=${currentPage}`)
+      .get(`/api/proizvodi?page=${currentPage}`)
       .then((res) => {
         // Laravel paginacija podatke drži u res.data.data
         setProizvodi(res.data.data);
@@ -23,6 +39,33 @@ function Proizvodi() {
       });
   }, [currentPage]); // useEffect se ponovo pokreće svaki put kad se promeni stranica
 
+  const handleAddToCart = (idProizvod, izabranaKolicina) => {
+    if (!idKorpa) {
+      alert("Morate biti ulogovani da biste dodali u korpu!");
+      return;
+    }
+
+    const token = sessionStorage.getItem("auth_token");
+
+    axios
+      .put(
+        `/api/korpa/${idKorpa}/proizvod/${idProizvod}`,
+        {
+          kolicina: izabranaKolicina, // Šaljemo broj iz inputa
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      )
+      .then((res) => {
+        alert(`Dodato ${izabranaKolicina} u korpu!`);
+      })
+      .catch((err) => {
+        console.log(err);
+        alert("Greška pri dodavanju.");
+      });
+  };
+
   return (
     <div className="menu">
       <h1 className="menuTitle"> Ponuda proizvoda </h1>
@@ -30,10 +73,12 @@ function Proizvodi() {
         {proizvodi.map((p) => (
           <ProizvodItem
             key={p.idProizvod}
+            id={p.idProizvod}
             image={p.slika}
             naziv={p.naziv}
             cena={p.cena}
-            // onAddToCart={() => addToCart(p)}
+            jedinica={p.mernaJedinica}
+            onAddToCart={handleAddToCart}
           />
         ))}
       </div>

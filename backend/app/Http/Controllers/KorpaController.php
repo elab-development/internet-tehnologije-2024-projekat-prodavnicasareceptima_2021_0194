@@ -138,26 +138,36 @@ class KorpaController extends Controller
         }
 
         $validated = $request->validate([
-            'kolicina' => 'integer|min:1'
+        'kolicina' => 'required|integer|min:1'
         ]);
-        
-        //Pronalaženje ili kreiranje stavke u korpi
+    
         try {
-            $cena = Proizvod::query()->find($idProizvod)->cena;
-            $stavka = KorpaStavka::updateOrCreate(
-                ['idKorpa' => $idKorpa, 'idProizvod' => $idProizvod],
-                ['kolicina' => $validated['kolicina'], 'cena' => $cena]
-            );
+            $cenaProizvoda = Proizvod::findOrFail($idProizvod)->cena;
+
+            // Proveravamo da li stavka već postoji
+            $stavka = KorpaStavka::where('idKorpa', $idKorpa)
+                                ->where('idProizvod', $idProizvod)
+                                ->first();
+
+            if ($stavka) {
+                // Ako postoji, DODAJEMO na postojeću količinu
+                $stavka->kolicina += $validated['kolicina'];
+                $stavka->save();
+            } else {
+                // Ako ne postoji, kreiramo novu
+                $stavka = KorpaStavka::create([
+                    'idKorpa' => $idKorpa,
+                    'idProizvod' => $idProizvod,
+                    'kolicina' => $validated['kolicina'],
+                    'cena' => $cenaProizvoda
+                ]);
+            }
 
         } catch(\Exception $e) {
-            return response()->json([
-                'message' => 'Puklo u updateOrCreate.',
-                'error' => $e->getMessage(),
-                'line' => $e->getLine()
-            ], 500);
+            return response()->json(['message' => 'Greška', 'error' => $e->getMessage()], 500);
         }
         
-        $korpa = Korpa::query()->find($idKorpa);
+        $korpa = Korpa::find($idKorpa);
         $korpa->updateUkupnaCena();
 
         return response()->json(['message' => 'Korpa je uspesno azurirana.'], 200);
