@@ -97,17 +97,25 @@ function NavBar({ token, user, addToken, addUser }) {
               </a>
             </li>
 
-            <li className="nav-item dropdown">
+            <li className="nav-item dropdown d-flex align-items-center">
+              {/* LINK NA STRANICU */}
               <a
-                className={`nav-link dropdown-toggle ${location.pathname.startsWith("/recepti") ? "active fw-bold" : ""}`}
-                href="#"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
+                className={`nav-link  ${
+                  location.pathname.startsWith("/recepti")
+                    ? "active fw-bold"
+                    : ""
+                }`}
+                href="/recepti"
               >
                 Recepti
               </a>
 
+              {/* SAMO STRELICA ZA DROPDOWN */}
+              <span
+                className="nav-link dropdown-toggle dropdown-toggle-split"
+                role="button"
+                data-bs-toggle="dropdown"
+              />
               <ul className="dropdown-menu">
                 <li>
                   <a className="dropdown-item" href="#">

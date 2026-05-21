@@ -41,10 +41,10 @@ class DatabaseSeeder extends Seeder
         //Proizvod::factory(3)->create();
 
         $this->call([
-            //ProizvodSeeder::class,
+            ProizvodSeeder::class,
             //KupovinaSeeder::class,
             //KupovinaStavkaSeeder::class,
-            //ReceptSeeder::class,
+            ReceptSeeder::class,
             //ReceptProizvodSeeder::class,
             //KorpaSeeder::class
         ]);

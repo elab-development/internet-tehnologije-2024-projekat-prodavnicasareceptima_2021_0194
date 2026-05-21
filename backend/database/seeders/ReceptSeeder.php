@@ -37,7 +37,7 @@ class ReceptSeeder extends Seeder
         $bademovoMleko= Proizvod::query()->where('naziv', 'Bademovo mleko')->first();
         $karfiol= Proizvod::query()->where('naziv', 'Karfiol')->first();
 
-/* // 1. Ovsena kaša
+ // 1. Ovsena kaša
         $r1 = Recept::create([
             'naziv' => 'Ovsena kaša sa bananom',
             'uputstvo' => 'U šerpu sipaj bademovo mleko i zagrej ga na srednjoj 
@@ -107,7 +107,7 @@ class ReceptSeeder extends Seeder
             $banana->idProizvod => ['potrebnaKolicina' => 2],
             $brasno->idProizvod => ['potrebnaKolicina' => 80],
             $ulje->idProizvod => ['potrebnaKolicina' => 10],
-        ]);*/
+        ]);
         $r4 = Recept::create([
             'naziv' => 'Energetska ovsena kaša sa jagodama',
             'uputstvo' => 'U malu šerpu sipajte ovseno mleko i dodajte ovsene pahuljice. Kuvajte na umerenoj vatri uz stalno mešanje dok se smesa ne zgusne (oko 5-7 minuta). Sklonite sa vatre i umešajte kašiku meda. Sipajte u činiju, odozgo poređajte sveže iseckane jagode i pospite sitno seckanim bademima za hrskavost.',
