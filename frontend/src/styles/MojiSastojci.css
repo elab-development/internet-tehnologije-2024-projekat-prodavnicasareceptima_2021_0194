@@ -1,0 +1,150 @@
+.sastojci-page-new {
+  min-height: 100vh;
+  background-color: #fcfdf9;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 50px;
+}
+
+.search-hero-section {
+  width: 100%;
+  max-width: 800px;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.search-hero-section h1 {
+  font-size: 3rem;
+  color: #1a3318;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.search-hero-section p {
+  font-size: 1.1rem;
+  color: #8a9a7d;
+}
+
+.search-wrapper {
+  display: flex;
+  gap: 12px;
+  margin-top: 40px;
+  position: relative;
+  background: white;
+  padding: 10px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.input-group-custom {
+  flex: 1;
+  position: relative;
+}
+
+.input-group-custom input {
+  width: 100%;
+  padding: 15px 20px;
+  border: none;
+  font-size: 1.1rem;
+  outline: none;
+  background: transparent;
+}
+
+.suggestions-list {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  width: 100%;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+  list-style: none;
+  padding: 10px 0;
+  z-index: 100;
+  text-align: left;
+}
+
+.suggestions-list li {
+  padding: 12px 25px;
+  cursor: pointer;
+  transition: 0.2s;
+  font-weight: 500;
+  color: #555;
+}
+
+.suggestions-list li:hover {
+  background: #f4f6f0;
+  color: #2d5a27;
+}
+
+.btn-go {
+  background: #2d5a27;
+  color: white;
+  border: none;
+  padding: 0 35px;
+  border-radius: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-go:hover {
+  background: #1b3a18;
+}
+
+/* TAGOVI (PILULE) */
+.selected-tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 30px;
+}
+
+.ingredient-tag {
+  background: #eef2e8;
+  color: #2d5a27;
+  padding: 10px 20px;
+  border-radius: 50px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid #e0e4d9;
+  animation: popIn 0.3s ease;
+}
+
+.ingredient-tag button {
+  background: none;
+  border: none;
+  color: #c0392b;
+  font-size: 22px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+@keyframes popIn {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.results-section {
+  width: 90%;
+  max-width: 950px;
+  margin-top: 40px;
+}
+
+.no-results-msg {
+  text-align: center;
+  color: #8a9a7d;
+  font-style: italic;
+  margin-top: 30px;
+}

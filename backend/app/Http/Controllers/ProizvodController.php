@@ -185,4 +185,10 @@ class ProizvodController extends Controller
             'data' => $proizvodi
         ], 200);
     }
+
+    public function allNames()
+    {
+        $proizvodi = Proizvod::select('idProizvod', 'naziv')->get();
+        return response()->json($proizvodi);
+    }
 }

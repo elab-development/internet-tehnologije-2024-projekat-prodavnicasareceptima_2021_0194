@@ -77,3 +77,5 @@ Route::put('/izmeni_recept/{idRecept}', [ReceptController::class, 'update']);
 Route::delete('/obrisi_recept/{idRecept}', [ReceptController::class, 'destroy']);*/
 
 Route::get('/recepti/{idRecept}/export-pdf', [ReceptController::class, 'exportPdf']);
+
+Route::get('proizvodi/all', [ProizvodController::class, 'allNames']);

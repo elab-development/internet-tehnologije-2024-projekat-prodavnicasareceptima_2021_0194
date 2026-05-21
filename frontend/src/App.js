@@ -5,6 +5,7 @@ import Register from "./pages/Register";
 import Proizvodi from "./pages/Proizvodi";
 import Recepti from "./pages/Recepti";
 import ReceptDetalji from "./pages/ReceptDetalji";
+import MojiSastojci from "./pages/MojiSastojci";
 import Korpa from "./pages/Korpa";
 import Navbar from "./components/NavBar";
 import axios from "axios";
@@ -74,6 +75,7 @@ function App() {
           <Route path="/recepti" element={<Recepti />} />
           <Route path="/recepti/:id" element={<ReceptDetalji />} />
           <Route path="/korpa" element={<Korpa />} />
+          <Route path="/pretraga_po_sastojcima" element={<MojiSastojci />} />
         </Routes>
       </Router>
     </div>
