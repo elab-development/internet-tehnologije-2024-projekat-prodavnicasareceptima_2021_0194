@@ -1,153 +1,258 @@
-/* --- OSNOVNI NAVBAR STILOVI --- */
+/* --- 1. FONTOVI I OSNOVNI NAVBAR --- */
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap");
+
 .custom-navbar {
-  background-color: #3e8839 !important; /* Tvoja nova pastelna zelena */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  padding: 10px 0;
-  transition: background-color 0.3s ease;
+  background-color: #3e8839 !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  padding: 12px 0;
+  font-family: "Plus Jakarta Sans", sans-serif;
 }
 
 .navbar-brand {
-  display: flex;
-  align-items: center;
+  font-family: "Playfair Display", serif;
+  font-size: 1.4rem;
   font-weight: bold;
-  color: white !important;
+  letter-spacing: -0.5px;
 }
 
 .navbar-logo {
-  height: 40px;
-  width: auto;
+  height: 38px;
   margin-right: 12px;
-  object-fit: contain;
   filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.1));
 }
 
-.navbar-nav {
-  width: 100%;
+/* --- 2. USER BADGE (PROFIL) --- */
+.user-badge {
   display: flex;
-  justify-content: center;
   align-items: center;
+  gap: 10px;
+  background-color: rgba(255, 255, 255, 0.12);
+  padding: 8px 18px;
+  border-radius: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  margin-left: 15px;
+  transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
+.user-badge:hover {
+  background-color: rgba(255, 255, 255, 0.22);
+  transform: translateY(-1px);
+}
+
+.nav-icon-green {
+  color: #c3ff93;
+  font-size: 19px;
+}
+.nav-icon-gray {
+  color: #ffffff;
+  font-size: 19px;
+  opacity: 0.8;
+}
+.nav-username {
+  font-size: 13px;
+  font-weight: 600;
+  color: white;
+}
+
+/* --- 3. NAVIGACIONI LINKOVI --- */
 .navbar-nav .nav-link {
-  transition: all 0.3s ease;
-  color: rgba(255, 255, 255, 0.9) !important;
+  color: rgba(255, 255, 255, 0.85) !important;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 10px 15px !important;
+  transition: 0.3s;
 }
 
-.navbar-nav .nav-link:hover {
-  color: #f9fbf2 !important; /* Svetla boja na hover */
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active {
+  color: #c3ff93 !important;
 }
 
-/* --- TOGGLER (HAMBURGER) STILOVI --- */
+.navbar-nav {
+  align-items: center !important; /* Ovo poravnava sve stavke po sredini */
+  width: 100%;
+}
 
-/* Uklanjanje Bootstrap okvira pri kliku koji je pravio "bold" efekat */
+/* --- 4. MODERAN DROPDOWN NA HOVER (BEZ BEŽANJA) --- */
+.custom-dropdown {
+  position: relative !important;
+  display: flex !important;
+  justify-content: center !important;
+  width: 100%;
+}
+
+.nav-link-wrapper {
+  display: flex;
+  justify-content: center !important; /* Magična linija za centar */
+  align-items: center;
+  width: 100%;
+  text-align: center;
+}
+
+.dropdown-arrow {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 12px;
+  transition: 0.3s;
+}
+
+/* KUTIJA MENIJA */
+.modern-dropdown {
+  display: none;
+  position: absolute !important;
+  top: 100%; /* Pozicija odmah ispod */
+  left: 50% !important;
+  transform: translateX(-50%) !important; /* Gura ga tačno na sredinu */
+  min-width: 220px;
+  background: white !important;
+  border: none !important;
+  border-radius: 22px !important;
+  padding: 15px 10px !important;
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.12) !important;
+  z-index: 1000;
+  list-style: none;
+  margin-top: 10px !important; /* Estetski razmak */
+  width: auto !important;
+  min-width: 200px !important;
+}
+
+/* MOSTA KOJI SPREČAVA ZATVARANJE (Nevidljiva zona) */
+.custom-dropdown::after {
+  content: "";
+  position: absolute;
+  top: 80%;
+  left: 0;
+  width: 100%;
+  height: 30px; /* Pokriva prazninu između linka i menija */
+  z-index: 1;
+}
+
+/* AKTIVACIJA NA HOVER */
+.custom-dropdown:hover .modern-dropdown {
+  display: block;
+  animation: dropdownFadeIn 0.3s ease-out;
+}
+
+.custom-dropdown:hover .dropdown-arrow {
+  transform: rotate(180deg);
+  color: #c3ff93;
+}
+
+/* STAVKE MENIJA */
+.dropdown-header {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #a1ae98;
+  font-weight: 800;
+  padding: 5px 20px 12px;
+}
+
+.modern-item {
+  width: 100%;
+  text-align: left;
+  background: transparent !important;
+  border: none !important;
+  padding: 12px 20px !important;
+  border-radius: 14px !important;
+  color: #444 !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  transition: 0.2s all ease !important;
+}
+
+.modern-item:hover {
+  background-color: #f4f6f0 !important;
+  color: #2d5a27 !important;
+  padding-left: 28px !important; /* Efekt "klizanja" udesno */
+}
+
+.modern-item .dot {
+  color: #2d5a27;
+  margin-right: 8px;
+  opacity: 0;
+  transition: 0.2s;
+}
+
+.modern-item:hover .dot {
+  opacity: 1;
+}
+
+/* --- 5. HAMBURGER I MOBILNI MENI --- */
 .navbar-toggler {
   border: none !important;
   padding: 10px;
-  background: transparent !important;
 }
-
 .navbar-toggler:focus {
   box-shadow: none !important;
-  outline: none !important;
 }
 
-/* Kontejner za crtice */
 .hamburger-icon {
-  width: 28px;
-  height: 20px; /* Fiksna visina */
+  width: 24px;
+  height: 18px;
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Centriramo ih */
-  gap: 5px; /* FIKSAN RAZMAK između crtica rešava problem debljine */
-  cursor: pointer;
+  justify-content: space-between;
 }
 
-/* Stil za tri crtice */
 .hamburger-icon span {
   display: block;
-  height: 3px !important; /* Forsiramo tačno 3px za sve */
+  height: 2px;
   width: 100%;
   background-color: white;
-  border-radius: 4px;
-  transition: all 0.3s ease-in-out;
-  /* Dodajemo ovo da sprečimo browser da "muti" ivice */
-  backface-visibility: hidden;
-  transform: translateZ(0);
+  border-radius: 10px;
+  transition: 0.3s;
 }
 
-/* --- ANIMACIJA U "X" (Kada dugme ima klasu .opened) --- */
-
-/* Prva crtica se rotira */
 .navbar-toggler.opened .hamburger-icon span:nth-child(1) {
   transform: translateY(8px) rotate(45deg);
 }
-
-/* Srednja crtica nestaje */
 .navbar-toggler.opened .hamburger-icon span:nth-child(2) {
   opacity: 0;
-  transform: translateX(-10px);
 }
-
-/* Treća crtica se rotira u suprotnom smeru */
 .navbar-toggler.opened .hamburger-icon span:nth-child(3) {
   transform: translateY(-8px) rotate(-45deg);
 }
 
-/* --- DROPDOWN STILOVI --- */
-.nav-item.dropdown {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.nav-item.dropdown .dropdown-menu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  margin-top: 0.35rem;
-  z-index: 9999;
-  border-radius: 10px;
-  border: none;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-.nav-item.dropdown:hover .dropdown-menu {
-  display: block;
-}
-
-.nav-item.dropdown .dropdown-toggle-split {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: auto;
-  min-width: 1.5rem;
-  padding-left: 0.25rem;
-  padding-right: 0.25rem;
-  cursor: pointer;
-}
-
-/* Stil za dropdown stavke */
-.dropdown-item:hover {
-  background-color: #f9fbf2;
-  color: #8cb38a;
-}
-
-/* --- RESPONZIVNOST --- */
-@media (max-width: 991px) {
-  .navbar-nav {
-    padding-top: 20px;
-    align-items: flex-start; /* Poravnanje levo na mobilnom */
+/* --- ANIMACIJE --- */
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
   }
-
-  .nav-item.dropdown {
-    flex-direction: column;
-    align-items: flex-start;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
+}
 
-  .nav-item.dropdown .dropdown-menu {
-    position: static; /* Dropdown se širi unutar menija na mobilnom */
-    width: 100%;
-    box-shadow: none;
-    background-color: rgba(255, 255, 255, 0.1);
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* RESPONSIVE */
+@media (max-width: 591px) {
+  .custom-dropdown::after {
+    display: none;
+  }
+  .modern-dropdown {
+    position: static;
+    display: block;
+    background: rgba(255, 255, 255, 0.08) !important;
+    box-shadow: none !important;
+    margin-top: 5px !important;
+    padding: 10px !important;
+  }
+  .modern-item {
+    color: rgb(98, 122, 107) !important;
+  }
+  .dropdown-header {
+    color: rgba(255, 255, 255, 0.5);
   }
 }

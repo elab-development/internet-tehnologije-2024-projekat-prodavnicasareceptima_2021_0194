@@ -1,6 +1,7 @@
 import React from "react";
 import "../styles/NavBar.css";
 import axios from "axios";
+import { LuUserRound, LuUserRoundCheck } from "react-icons/lu";
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -78,9 +79,21 @@ function NavBar({ token, user, addToken, addUser }) {
             <img src="/logo.png" alt="Logo" className="navbar-logo" />
             Zdravi Zalogaji
           </a>
-          <span className="navbar-text text-white ms-2 d-none d-sm-inline">
-            {user ? `👋 ${user.korisnickoIme}` : "👤 Gost"}
-          </span>
+          <div className="nav-user-profile">
+            {user ? (
+              <div className="user-badge">
+                <LuUserRoundCheck className="nav-icon-green" />
+                <span className="nav-username">
+                  Zdravo, {user.korisnickoIme}
+                </span>
+              </div>
+            ) : (
+              <div className="user-badge guest">
+                <LuUserRound className="nav-icon-gray" />
+                <span className="nav-username">Gost</span>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* MODIFIKOVANO DUGME */}
@@ -111,23 +124,24 @@ function NavBar({ token, user, addToken, addUser }) {
               </a>
             </li>
 
-            <li className="nav-item dropdown d-flex align-items-center">
-              <a
-                className={`nav-link ${location.pathname.startsWith("/recepti") ? "active fw-bold" : ""}`}
-                href="/recepti"
-                onClick={closeMenu}
-              >
-                Recepti
-              </a>
-              <span
-                className="nav-link dropdown-toggle dropdown-toggle-split"
-                data-bs-toggle="dropdown"
-              />
-              <ul className="dropdown-menu">
+            <li className="nav-item dropdown custom-dropdown">
+              <div className="nav-link-wrapper">
+                <a
+                  className={`nav-link ${location.pathname.startsWith("/recepti") ? "active fw-bold" : ""}`}
+                  href="/recepti"
+                  onClick={closeMenu}
+                >
+                  Recepti
+                </a>
+                <span className="dropdown-arrow">▾</span>
+              </div>
+
+              <ul className="dropdown-menu modern-dropdown">
+                <li className="dropdown-header">Kategorije jela</li>
                 {kategorijeRecepata.map((kat) => (
                   <li key={kat}>
                     <button
-                      className="dropdown-item"
+                      className="dropdown-item modern-item"
                       onClick={() => {
                         navigate("/recepti", {
                           state: { izabranaKategorija: kat },
@@ -135,7 +149,7 @@ function NavBar({ token, user, addToken, addUser }) {
                         closeMenu();
                       }}
                     >
-                      {kat}
+                      <span className="dot">•</span> {kat}
                     </button>
                   </li>
                 ))}

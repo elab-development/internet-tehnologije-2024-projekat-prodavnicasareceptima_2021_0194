@@ -1,0 +1,235 @@
+/* 1. Uvoz fontova za "premium" i nežan izgled */
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap");
+
+.register-page-container {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fbfbf9; /* Veoma svetla, skoro bela bež */
+  font-family: "Plus Jakarta Sans", sans-serif;
+  padding: 20px;
+}
+
+.register-card-horizontal {
+  display: flex;
+  background: white;
+  width: 100%;
+  max-width: 1050px;
+  height: 650px;
+  border-radius: 40px; /* Nežne, ultra zaobljene ivice */
+  overflow: hidden;
+  /* Veoma diskretna, meka senka */
+  box-shadow: 0 30px 80px rgba(70, 90, 60, 0.06);
+  border: 1px solid #f2f2f0;
+}
+
+/* LEVA STRANA - SLIKA */
+.register-image-side {
+  flex: 1.2;
+  background-image: url("https://inhonorofdesign.com/wp-content/uploads/2018/04/acai-breakfast-bowls.jpg");
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+/* Sređivanje teksta preko slike da ne bode oči i ne preklapa se ružno */
+.image-overlay-light {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 50px;
+  /* Nežni gradijent koji samo malo potamnjuje dno radi čitljivosti */
+  background: linear-gradient(rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.3));
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; /* Tekst ide dole da bi slika "disala" */
+  color: white;
+}
+
+.image-overlay-light h2 {
+  font-family: "Playfair Display", serif;
+  font-size: 2.6rem;
+  font-weight: 600;
+  line-height: 1.1;
+  margin-bottom: 10px;
+  letter-spacing: -0.5px;
+}
+
+.image-overlay-light p {
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  opacity: 0.9;
+  font-weight: 600;
+}
+
+/* DESNA STRANA - FORMA */
+.register-form-side {
+  flex: 1;
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: white;
+}
+
+.form-header h3 {
+  font-family: "Playfair Display", serif;
+  font-size: 2.4rem;
+  color: #1a3318; /* Tamno maslinasta */
+  margin-bottom: 8px;
+}
+
+.form-header p {
+  color: #8a9a7d; /* Nežna žalfija zelena */
+  font-size: 0.95rem;
+  margin-bottom: 40px;
+  font-weight: 500;
+}
+
+.aesthetic-form {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.input-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.input-field-group label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #a1ae98;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  padding-left: 5px;
+}
+
+.input-field-group input {
+  padding: 16px 22px;
+  border-radius: 18px;
+  border: 1.5px solid #f4f6f0;
+  background-color: #f9fbf7; /* Veoma bleda zelena pozadina */
+  font-size: 0.95rem;
+  color: #2d5a27;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.input-field-group input:focus {
+  border-color: #2d5a27;
+  background-color: white;
+  box-shadow: 0 8px 20px rgba(45, 90, 39, 0.05);
+  transform: translateY(-1px);
+}
+
+.btn-register-main {
+  background-color: #2d5a27;
+  color: white;
+  padding: 18px;
+  border: none;
+  border-radius: 50px; /* Pill shape dugme za moderniji izgled */
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  letter-spacing: 0.5px;
+}
+
+.btn-register-main:hover {
+  background-color: #1b3a18;
+  transform: translateY(-3px);
+  box-shadow: 0 12px 25px rgba(45, 90, 39, 0.2);
+}
+
+.register-error {
+  color: #e74c3c;
+  font-size: 0.85rem;
+  text-align: center;
+  background: #fff5f5;
+  padding: 10px;
+  border-radius: 12px;
+}
+
+.login-link-text {
+  text-align: center;
+  margin-top: 25px;
+  color: #888;
+  font-size: 0.9rem;
+}
+
+.login-link-text a {
+  color: #2d5a27;
+  font-weight: 700;
+  text-decoration: none;
+  margin-left: 5px;
+  border-bottom: 1px solid transparent;
+  transition: 0.3s;
+}
+
+.login-link-text a:hover {
+  border-bottom-color: #2d5a27;
+}
+
+/* SUCCESS MODAL */
+.modal-success-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.modal-success-card {
+  background: white;
+  padding: 50px;
+  border-radius: 40px;
+  text-align: center;
+  width: 400px;
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.05);
+}
+
+.success-check {
+  width: 65px;
+  height: 65px;
+  background: #f4f6f0;
+  color: #2d5a27;
+  font-size: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 25px;
+}
+
+/* Prilagođavanje za manje ekrane */
+@media (max-width: 900px) {
+  .register-card-horizontal {
+    flex-direction: column;
+    height: auto;
+    max-width: 500px;
+  }
+  .register-image-side {
+    height: 250px;
+  }
+  .register-form-side {
+    padding: 40px;
+  }
+  .image-overlay-light h2 {
+    font-size: 2rem;
+  }
+}
