@@ -1,0 +1,206 @@
+.recepti-container {
+  padding-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-height: calc(100vh - 80px);
+  background-color: #f9fbf2;
+  padding-bottom: 30px;
+}
+
+.recepti-blog-list {
+  width: 90%;
+  max-width: 1000px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  flex-grow: 1;
+}
+
+/* KARTICA - FIKSNA VISINA ZA SVE */
+.recept-blog-card {
+  display: flex;
+  background: white;
+  height: 320px; /* Svi recepti će biti visoki tačno ovoliko */
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  border: 1px solid #edf0e9;
+}
+
+.recept-blog-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(45, 90, 39, 0.15);
+}
+
+/* LEVA STRANA - SLIKA */
+.recept-image-container {
+  flex: 0 0 40%; /* Zauzima tačno 40% širine */
+  position: relative;
+}
+
+.recept-image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Slika popunjava prostor bez rastezanja */
+}
+
+/* DESNA STRANA - SADRŽAJ */
+.recept-content {
+  flex: 1;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Raspoređuje naslov gore, a dugme dole */
+}
+
+.recept-title {
+  font-size: 24px;
+  color: #2d5a27;
+  margin-bottom: 10px;
+  /* Ako je naslov predugačak, skraćuje ga na 2 reda sa tri tačke */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.recept-meta {
+  display: flex;
+  gap: 15px;
+  color: #666;
+  font-size: 13px;
+  margin-bottom: 15px;
+}
+
+.recept-description {
+  color: #777;
+  font-size: 14px;
+  line-height: 1.5;
+  /* Skraćuje predugačak opis na 3 reda da bi kartice ostale iste */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.btn-pregled {
+  background-color: #2d5a27;
+  color: white;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+  width: fit-content;
+  transition: 0.3s;
+}
+
+.btn-pregled:hover {
+  background-color: #1b3a18;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.pagination-container {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  background: white;
+  padding: 15px 30px;
+  border-radius: 50px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+
+.btn-pagination {
+  background: white;
+  color: #2d5a27;
+  border: 2px solid #2d5a27;
+  padding: 8px 20px;
+  border-radius: 50px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s all;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-pagination:hover:not(:disabled) {
+  background: #2d5a27;
+  color: white;
+}
+
+.btn-pagination:disabled {
+  border-color: #eee;
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+.page-info {
+  font-size: 15px;
+  color: #555;
+}
+
+.page-info strong {
+  color: #2d5a27;
+  font-size: 18px;
+}
+
+/* Responsivnost za manje ekrane */
+@media (max-width: 768px) {
+  .recept-blog-card {
+    flex-direction: column;
+    height: auto; /* Na mobilnom dozvoljavamo promenu visine */
+  }
+  .recept-image-container {
+    height: 200px;
+  }
+}
+
+.filters-section {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 40px;
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.filters-section select {
+  padding: 10px 15px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  outline: none;
+  color: #2d5a27;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-reset {
+  background: #f0f0f0;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #666;
+  transition: 0.3s;
+}
+
+.btn-reset:hover {
+  background: #e0e0e0;
+}
+
+.text-center {
+  text-align: center;
+}
+.mb-4 {
+  margin-bottom: 1.5rem;
+}

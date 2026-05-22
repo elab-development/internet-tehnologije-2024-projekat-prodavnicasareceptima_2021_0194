@@ -1,0 +1,56 @@
+.footer {
+  background-color: #368a44;
+  color: rgb(255, 255, 255);
+  padding: 40px 0 20px 0;
+  margin-top: 60px;
+  width: 100%;
+}
+
+.footer-container {
+  width: 85%;
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr; /* Prva kolona malo šira od druge */
+  gap: 100px; /* Veći razmak između dve sekcije */
+}
+
+.footer-section h3 {
+  color: #ffffff;
+  font-size: 22px;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+.footer-section h4 {
+  font-size: 18px;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+/* UKLONJENI SU SVI ::AFTER ELEMENTI KOJI SU PRAVILI LINIJE */
+
+.footer-section p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+
+.footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 40px;
+  padding-top: 20px;
+  text-align: center;
+  font-size: 12px;
+  color: #ffffff;
+}
+
+/* Responzivnost za mobilne telefone */
+@media (max-width: 768px) {
+  .footer-container {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    text-align: center;
+  }
+}

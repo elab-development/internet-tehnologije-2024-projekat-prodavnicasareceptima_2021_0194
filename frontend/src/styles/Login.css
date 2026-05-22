@@ -1,0 +1,202 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap");
+
+.login-page-wrapper {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f9fbf2; /* Nežna off-white pozadina */
+  font-family: "Plus Jakarta Sans", sans-serif;
+  /* Suptilna tekstura tačkica */
+  background-image: radial-gradient(#2d5a270a 2px, transparent 2px);
+  background-size: 30px 30px;
+}
+
+.login-card {
+  background: white;
+  width: 100%;
+  max-width: 420px;
+  padding: 60px 45px;
+  border-radius: 40px; /* Ultra zaobljeno za meki izgled */
+  box-shadow: 0 25px 70px rgba(45, 90, 39, 0.05);
+  border: 1px solid #f2f2f0;
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 45px;
+}
+
+.login-header h2 {
+  font-family: "Playfair Display", serif; /* Elegantna "serf" slova */
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #1a3318;
+  margin-bottom: 12px;
+  letter-spacing: -0.5px;
+}
+
+.login-header p {
+  color: #8a9a7d;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.custom-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.custom-input-group label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #a1ae98;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  padding-left: 5px;
+}
+
+.custom-input-group input {
+  padding: 16px 22px;
+  border-radius: 18px;
+  border: 1.5px solid #f4f6f0;
+  background-color: #f9fbf7;
+  font-size: 1rem;
+  color: #2d5a27;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.custom-input-group input:focus {
+  border-color: #2d5a27;
+  background-color: white;
+  box-shadow: 0 8px 20px rgba(45, 90, 39, 0.05);
+  transform: translateY(-1px);
+}
+
+.error-alert {
+  background-color: #fff5f5;
+  color: #e74c3c;
+  padding: 12px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  text-align: center;
+  border: 1px solid #ffe3e3;
+}
+
+.btn-login-submit {
+  background-color: #2d5a27;
+  color: white;
+  padding: 18px;
+  border: none;
+  border-radius: 50px; /* Dugme kao pilula */
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  margin-top: 15px;
+  letter-spacing: 0.5px;
+}
+
+.btn-login-submit:hover {
+  background-color: #1b3a18;
+  transform: translateY(-3px);
+  box-shadow: 0 12px 25px rgba(45, 90, 39, 0.2);
+}
+
+.register-redirect {
+  text-align: center;
+  font-size: 0.95rem;
+  color: #888;
+  margin-top: 25px;
+}
+
+.register-redirect a {
+  color: #2d5a27;
+  text-decoration: none;
+  font-weight: 700;
+  margin-left: 5px;
+  border-bottom: 2px solid transparent;
+  transition: 0.3s;
+}
+
+.register-redirect a:hover {
+  border-bottom-color: #2d5a27;
+}
+
+/* SUCCESS MODAL REDIZAJN */
+.success-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px); /* Moderan stakleni efekat */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.success-modal {
+  background: white;
+  padding: 50px;
+  border-radius: 40px;
+  text-align: center;
+  width: 380px;
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.05);
+  border: 1px solid #f0f2eb;
+  animation: modalPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.success-icon {
+  width: 65px;
+  height: 65px;
+  background: #f4f6f0;
+  color: #2d5a27;
+  font-size: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  margin: 0 auto 25px;
+}
+
+.success-modal h3 {
+  font-family: "Playfair Display", serif;
+  font-size: 1.8rem;
+  color: #1a3318;
+  margin-bottom: 10px;
+}
+
+.btn-modal-ok {
+  background-color: #2d5a27;
+  color: white;
+  border: none;
+  padding: 14px 35px;
+  border-radius: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 25px;
+  transition: 0.3s;
+}
+
+@keyframes modalPop {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

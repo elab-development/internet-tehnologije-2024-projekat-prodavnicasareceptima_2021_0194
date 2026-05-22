@@ -1,0 +1,253 @@
+/* --- 1. FONTOVI I OSNOVNA STRUKTURA --- */
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap");
+
+.custom-navbar {
+  background-color: #368a44 !important;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  padding: 10px 0;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.navbar-brand {
+  font-family: "Playfair Display", serif;
+  font-size: 1.5rem;
+  font-weight: bold;
+  letter-spacing: -0.5px;
+  color: #ffffff !important;
+  padding: 10px 20px;
+}
+
+.navbar-logo {
+  height: 42px;
+  margin-right: 12px;
+  filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.15));
+}
+
+/* --- 2. USER BADGE --- */
+.user-badge {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  padding: 8px 20px;
+  border-radius: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  margin-left: 15px;
+  transition: 0.3s;
+}
+
+.user-badge:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+.nav-icon-green {
+  color: #c3ff93;
+  font-size: 20px;
+}
+.nav-icon-gray {
+  color: #ffffff;
+  font-size: 20px;
+  opacity: 0.8;
+}
+.nav-username {
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+}
+
+/* --- 3. VERTIKALNI BLOKOVI (NAVIGACIJA) --- */
+.navbar-nav {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  width: 100%;
+  margin-top: 15px !important;
+  gap: 0;
+}
+
+.navbar-nav .nav-item {
+  width: 100%;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+}
+
+.navbar-nav .nav-item:first-child {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.navbar-nav .nav-link {
+  color: rgba(255, 255, 255, 0.8) !important;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 18px 25px !important;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #c3ff93 !important;
+}
+
+.navbar-nav .nav-link.active {
+  background: rgba(255, 255, 255, 0.08);
+  color: #c3ff93 !important;
+  font-weight: 600;
+}
+
+.custom-dropdown {
+  display: flex !important;
+  flex-direction: column;
+}
+
+.dropdown-arrow {
+  font-size: 12px;
+  margin-left: 10px;
+  color: #ffffff !important; /* Bela boja za bolju vidljivost */
+  opacity: 0.9 !important;
+  transition: 0.3s;
+}
+
+.modern-dropdown {
+  display: none;
+  position: static !important;
+  width: 100% !important;
+  background: rgba(255, 255, 255, 0.12) !important;
+  padding: 10px 0 !important;
+  margin: 0 !important;
+  list-style: none;
+}
+
+.custom-dropdown:hover .modern-dropdown {
+  display: block;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.custom-dropdown:hover .dropdown-arrow {
+  transform: rotate(180deg);
+  color: #c3ff93 !important;
+}
+
+/* STAVKE U DROPDOWNU */
+.modern-item {
+  width: 100%;
+  text-align: center;
+  background: transparent !important;
+  border: none !important;
+  padding: 12px 25px !important;
+  color: rgba(255, 255, 255, 0.85) !important;
+  font-size: 14px !important;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: 0.3s;
+}
+
+.modern-item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background: #c3ff93;
+  transition: 0.3s;
+  opacity: 0;
+}
+
+.modern-item:hover {
+  color: #c3ff93 !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+.modern-item:hover::before {
+  width: 4px;
+  opacity: 1;
+}
+
+.modern-item .dot {
+  display: none;
+}
+
+/* POPRAVLJEN NASLOV KATEGORIJA */
+.dropdown-header {
+  color: #c3ff93 !important; /* Zelena boja za jasnu vidljivost */
+  opacity: 0.85;
+  padding: 12px 0 8px;
+  text-align: center;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 700;
+}
+
+/* --- 5. HAMBURGER IKONICA --- */
+.navbar-toggler {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  padding: 10px;
+}
+
+.hamburger-icon {
+  width: 24px;
+  height: 16px;
+  position: relative;
+}
+
+.hamburger-icon span {
+  display: block;
+  position: absolute;
+  height: 2px;
+  width: 100%;
+  background-color: #ffffff !important;
+  border-radius: 4px;
+  left: 0;
+  transition: 0.3s ease-in-out;
+}
+
+.hamburger-icon span:nth-child(1) {
+  top: 0;
+}
+.hamburger-icon span:nth-child(2) {
+  top: 7px;
+}
+.hamburger-icon span:nth-child(3) {
+  top: 14px;
+}
+
+.navbar-toggler.opened .hamburger-icon span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.navbar-toggler.opened .hamburger-icon span:nth-child(2) {
+  opacity: 0;
+}
+.navbar-toggler.opened .hamburger-icon span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* --- ANIMACIJE --- */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* RESPONSIVE */
+@media (max-width: 591px) {
+  .collapse.show {
+    margin-top: 10px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 15px;
+  }
+}
