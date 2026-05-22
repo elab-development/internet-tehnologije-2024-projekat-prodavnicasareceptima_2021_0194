@@ -6,7 +6,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #fbfbf9; /* Nežna off-white pozadina */
+  background-color: #f9fbf2; /* Nežna off-white pozadina */
   font-family: "Plus Jakarta Sans", sans-serif;
   /* Suptilna tekstura tačkica */
   background-image: radial-gradient(#2d5a270a 2px, transparent 2px);

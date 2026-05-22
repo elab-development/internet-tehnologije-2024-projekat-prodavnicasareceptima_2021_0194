@@ -26,7 +26,7 @@ function Home({ token }) {
               className="btn-outline"
               onClick={() => navigate("/recepti")}
             >
-              📖 Pogledaj recepte
+              📖 Pogledajte recepte
             </button>
           </div>
         </div>
@@ -36,7 +36,7 @@ function Home({ token }) {
         <div className="feature-card">
           <div className="icon">🌿</div>
           <h3>Sveže namirnice</h3>
-          <p>Direktno sa farme na vašu trpezu.</p>
+          <p>Direktno sa farme na Vašu trpezu.</p>
         </div>
         <div className="feature-card">
           <div className="icon">🥗</div>
